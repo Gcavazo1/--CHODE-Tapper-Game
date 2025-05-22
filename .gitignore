@@ -1,0 +1,15 @@
+# Godot-specific ignores
+.godot/
+export_presets.cfg
+*.translation
+
+# Optional: These are files that are often not versioned,
+# but you may want to include them if you always develop
+# on the same OS and want to share editor settings.
+# .editor/
+# project.godot.TMP
+
+# Mono-specific ignores (if you're using C#)
+.mono/
+data_*/
+mono_project/
