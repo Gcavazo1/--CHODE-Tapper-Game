@@ -1,0 +1,626 @@
+[gd_scene load_steps=24 format=3 uid="uid://iygnr1yulhm"]
+
+[ext_resource type="Script" uid="uid://biuooibxyn6q2" path="res://scripts/ui/MainLayout.gd" id="1_script"]
+[ext_resource type="Shader" uid="uid://dgdvl665cyybt" path="res://assets/shaders/rounded_texture_rect.gdshader" id="2_4jbgb"]
+[ext_resource type="PackedScene" uid="uid://edoes2qjayab" path="res://scenes/ui/components/GirthCounter.tscn" id="2_girth_counter"]
+[ext_resource type="StyleBox" uid="uid://b7ih064kjqxxn" path="res://assets/art/backgrounds/MainLayoutTOP.tres" id="2_pswwv"]
+[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="2_thtur"]
+[ext_resource type="FontFile" uid="uid://dc44o3ilk6crs" path="res://assets/fonts/BrokenConsoleBold.ttf" id="2_vnoqt"]
+[ext_resource type="PackedScene" uid="uid://07eq8jk5yhlc" path="res://scenes/ui/components/ChargeMeter.tscn" id="3_charge_meter"]
+[ext_resource type="PackedScene" uid="uid://djo0dd7ofvppk" path="res://scenes/ui/components/AchievementPanel.tscn" id="4_achievement_panel"]
+[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="4_ettmo"]
+[ext_resource type="StyleBox" uid="uid://cum5kh7mtvya7" path="res://assets/art/backgrounds/MainLayoutBOTTOMContentPanel.tres" id="4_flqnt"]
+[ext_resource type="PackedScene" uid="uid://cvq1vj2cmxngu" path="res://scenes/ui/components/SkillTapMeter.tscn" id="4_skill_tap_meter"]
+[ext_resource type="StyleBox" uid="uid://b42wyy5telhjm" path="res://assets/art/backgrounds/MainLayout.tres" id="5_g5lb3"]
+[ext_resource type="Texture2D" uid="uid://bj1rvkrmjry62" path="res://assets/art/vfx/neon_light_circle.png" id="6_t7xry"]
+[ext_resource type="Texture2D" uid="uid://cjnlhym25khpe" path="res://assets/art/vfx/neon_light_circle2.png" id="7_d4y2x"]
+[ext_resource type="Script" uid="uid://dko27istes5ny" path="res://scripts/entities/RatSpawner.gd" id="9_g5lb3"]
+[ext_resource type="PackedScene" uid="uid://cuyvtm2dmn6mk" path="res://scenes/entities/Rat.tscn" id="12_flqnt"]
+[ext_resource type="StyleBox" uid="uid://b6bes1n1o3lts" path="res://assets/art/backgrounds/MainLayoutTOPContentPanel.tres" id="15_0qqic"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7xry"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_color = Color(0, 0, 0, 0.639216)
+border_blend = true
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_color = Color(0, 0.913725, 1, 1)
+shadow_size = 8
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t7xry"]
+shader = ExtResource("2_4jbgb")
+shader_parameter/corner_radius = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thtur"]
+bg_color = Color(0, 0, 0, 0)
+corner_radius_top_left = 32
+corner_radius_top_right = 32
+corner_radius_bottom_right = 32
+corner_radius_bottom_left = 32
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vnoqt"]
+shader = ExtResource("2_4jbgb")
+shader_parameter/corner_radius = 100.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jbgb"]
+bg_color = Color(0, 0, 0, 0.745098)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(1, 1, 0, 1)
+border_blend = true
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_right_bottom_content"]
+bg_color = Color(0.34902, 0.701961, 0.756863, 0.490196)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.34902, 0.701961, 0.756863, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="MainLayout" type="Control" groups=["MainLayout"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="MainHBox" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="LeftPanel" type="VBoxContainer" parent="Margin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.7
+theme_override_constants/separation = 16
+
+[node name="TopLeftContainer" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="TopStylePanel" type="PanelContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_pswwv")
+
+[node name="TopContent" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TabsHBox" type="HBoxContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent"]
+layout_mode = 2
+
+[node name="LeftColumn" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Upgrade1Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 1"
+
+[node name="Upgrade2Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 2"
+
+[node name="Upgrade3Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 3"
+
+[node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Upgrade4Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 4"
+
+[node name="Upgrade5Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 5"
+
+[node name="Upgrade6Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "UPGRADE 6"
+
+[node name="TopContentPanel" type="PanelContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("4_flqnt")
+
+[node name="TopScrollContainer" type="ScrollContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TopContentPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TopContentVBox" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="UpgradeContent" type="Label" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer/TopContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Upgrade content will appear here"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BottomLeftContainer" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="BottomStylePanel" type="PanelContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_g5lb3")
+
+[node name="BottomContent" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TabsHBox" type="HBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent"]
+layout_mode = 2
+
+[node name="LeftColumn" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="AchievementsButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "ACHIEVEMENTS"
+
+[node name="TrophiesButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "TROPHIES"
+
+[node name="EmptyButton1" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "EMPTY"
+
+[node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BlockchainButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "BLOCKCHAIN"
+
+[node name="EmptyButton2" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "EMPTY"
+
+[node name="EmptyButton3" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "EMPTY"
+
+[node name="BottomContentPanel" type="PanelContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("4_flqnt")
+
+[node name="BottomScrollContainer" type="ScrollContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AchievementsContentVBox" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Achievement1Label" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/AchievementsContentVBox"]
+layout_mode = 2
+theme_override_constants/line_spacing = 1
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Placeholder: Achieve 100 Girth"
+autowrap_mode = 3
+
+[node name="Achievement2Label" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/AchievementsContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Placeholder: Unlock Veinous Veridian"
+autowrap_mode = 3
+
+[node name="TrophiesContentVBox" type="GridContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 3
+
+[node name="TrophyPlaceholder1" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/TrophiesContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Trophy 1"
+autowrap_mode = 3
+
+[node name="TrophyPlaceholder2" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/TrophiesContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Trophy 2"
+autowrap_mode = 3
+
+[node name="BlockchainContentVBox" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WalletAddressLabel" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/BlockchainContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Wallet Info: Coming Soon"
+autowrap_mode = 3
+
+[node name="ConnectWalletButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/BlockchainContentVBox"]
+layout_mode = 2
+text = "Connect Wallet (Future Feature)"
+
+[node name="CenterArea" type="VBoxContainer" parent="Margin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 2.5
+theme_override_constants/separation = 16
+
+[node name="TapperAreaPanel" type="Panel" parent="Margin/MainHBox/CenterArea"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7xry")
+
+[node name="TapperAreaBG" type="TextureRect" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+material = SubResource("ShaderMaterial_t7xry")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_thtur")
+expand_mode = 1
+
+[node name="TapperCenter" type="Control" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TapperArea" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter" instance=ExtResource("4_ettmo")]
+position = Vector2(295, 259)
+scale = Vector2(0.7, 0.607)
+
+[node name="RatSpawner" type="Control" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_g5lb3")
+rat_scene = ExtResource("12_flqnt")
+y_offset = -16.0
+
+[node name="Timer" type="Timer" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter/RatSpawner"]
+
+[node name="GirthCounterPanel" type="Panel" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+offset_right = 676.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_thtur")
+
+[node name="GirthCounter" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/GirthCounterPanel" instance=ExtResource("2_girth_counter")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_right = 611.0
+offset_bottom = 77.0
+scale = Vector2(1.1, 1.1)
+size_flags_vertical = 1
+
+[node name="NeonLightsContainer" type="Node2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+
+[node name="NeonSignRightSide" type="PointLight2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer"]
+material = SubResource("ShaderMaterial_vnoqt")
+position = Vector2(540, 116)
+scale = Vector2(0.505689, 0.522803)
+color = Color(0.898039, 0, 1, 0.94902)
+shadow_color = Color(0.746644, 0.00131156, 0.568267, 1)
+texture = ExtResource("6_t7xry")
+texture_scale = 1.55
+height = 215.0
+
+[node name="NeonSignLeftSide" type="PointLight2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer"]
+position = Vector2(103.5, 116)
+scale = Vector2(0.898581, 1.02341)
+color = Color(0.898039, 0, 1, 0.94902)
+energy = 0.35
+texture = ExtResource("7_d4y2x")
+texture_scale = 1.1
+height = 200.0
+
+[node name="HUDMessagesPanel" type="HBoxContainer" parent="Margin/MainHBox/CenterArea"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="HUDSectionPanel" type="Panel" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_4jbgb")
+
+[node name="ChargeAndSkillMeterContainer" type="VBoxContainer" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel"]
+layout_mode = 2
+offset_right = 265.0
+offset_bottom = 227.0
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.4
+theme_override_constants/separation = 44
+alignment = 1
+
+[node name="ChargeMeterContainer" type="MarginContainer" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/ChargeAndSkillMeterContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 32
+
+[node name="ChargeMeter" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/ChargeAndSkillMeterContainer/ChargeMeterContainer" instance=ExtResource("3_charge_meter")]
+layout_mode = 2
+
+[node name="SkillTapMeter" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/ChargeAndSkillMeterContainer" instance=ExtResource("4_skill_tap_meter")]
+layout_mode = 2
+
+[node name="NotificationsContainer" type="MarginContainer" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -399.0
+offset_top = -113.5
+offset_bottom = 113.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="AchievementPanel" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/NotificationsContainer" instance=ExtResource("4_achievement_panel")]
+layout_mode = 2
+
+[node name="RightPanel" type="VBoxContainer" parent="Margin/MainHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="TopRightContainer" type="VBoxContainer" parent="Margin/MainHBox/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="TopStylePanel" type="PanelContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("2_pswwv")
+
+[node name="TopContent" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TabsHBox" type="HBoxContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent"]
+layout_mode = 2
+
+[node name="LeftColumn" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShopTab1Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "STORE"
+
+[node name="ShopTab2Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "PREMIUM"
+
+[node name="ShopTab3Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "BOOSTS"
+
+[node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ShopTab4Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "NFT"
+
+[node name="ShopTab5Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "SKINS"
+
+[node name="ShopTab6Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "SPECIAL"
+
+[node name="TopContentPanel" type="PanelContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("15_0qqic")
+
+[node name="TopScrollContainer" type="ScrollContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TopContentPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="StoreContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="StoreContentLabel" type="Label" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer/StoreContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Storefront under construction"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BottomRightContainer" type="VBoxContainer" parent="Margin/MainHBox/RightPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="BottomStylePanel" type="PanelContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = ExtResource("5_g5lb3")
+
+[node name="BottomContent" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TabsHBox" type="HBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent"]
+layout_mode = 2
+
+[node name="LeftColumn" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SettingsButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "SETTINGS"
+
+[node name="StatsButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "STATS"
+
+[node name="EmptyButton1" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "WALLET"
+
+[node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InfoButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "INFO"
+
+[node name="EmptyButton2" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "LEADERBOARD"
+
+[node name="EmptyButton3" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "EMPTY"
+
+[node name="BottomContentPanel" type="PanelContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_right_bottom_content")
+
+[node name="BottomScrollContainer" type="ScrollContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="SettingsLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/SettingsContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Settings coming soon..."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StatsContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="StatsLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/StatsContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Player statistics will be shown here"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="InfoContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="InfoLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/InfoContentVBox"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_vnoqt")
+text = "Game info and help will be displayed here"
+horizontal_alignment = 1
+autowrap_mode = 3

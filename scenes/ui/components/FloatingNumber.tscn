@@ -1,0 +1,113 @@
+[gd_scene load_steps=7 format=3 uid="uid://qde5e6pa8aa2"]
+
+[ext_resource type="Script" uid="uid://374yv7moobri" path="res://scripts/ui/components/FloatingNumber.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
+[ext_resource type="Shader" uid="uid://dt2ympdimi55" path="res://assets/shaders/glitch_text.gdshader" id="3_glitch_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_glitch"]
+shader = ExtResource("3_glitch_shader")
+shader_parameter/scanline_count = 50.0
+shader_parameter/scanline_speed = 1.0
+shader_parameter/noise_strength = 0.1
+shader_parameter/distortion_strength = 0.001
+shader_parameter/time_scale = 1.0
+shader_parameter/glitch_intensity = 0.3
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_text"]
+blend_mode = 1
+
+[sub_resource type="Theme" id="Theme_floating_number"]
+default_font = ExtResource("2_font")
+default_font_size = 24
+
+[node name="FloatingNumber" type="Node2D"]
+scale = Vector2(1.2, 1.2)
+script = ExtResource("1_script")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="GlitchContainer" type="Control" parent="."]
+material = SubResource("ShaderMaterial_glitch")
+use_parent_material = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelRedOffset" type="Label" parent="GlitchContainer"]
+material = SubResource("CanvasItemMaterial_text")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.0
+offset_top = -25.0
+offset_right = 48.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_floating_number")
+theme_override_colors/font_color = Color(1, 0, 0, 0.6)
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="LabelGreenOffset" type="Label" parent="GlitchContainer"]
+material = SubResource("CanvasItemMaterial_text")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -25.0
+offset_right = 52.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_floating_number")
+theme_override_colors/font_color = Color(0, 1, 0, 0.6)
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="GlitchContainer"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_floating_number")
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AnimationTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="GlitchTimer" type="Timer" parent="."]
+wait_time = 0.05
+autostart = true
+
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]
+[connection signal="timeout" from="GlitchTimer" to="." method="_on_glitch_timer_timeout"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpjggrg8y0u5h"]
+
+[ext_resource type="Script" path="res://scripts/core/TapperCenter.gd" id="1_w8gus"]
+[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="2_03ysy"]
+[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="3_jiqcq"]
+[ext_resource type="Script" path="res://scripts/entities/RatSpawner.gd" id="4_1mdfj"]
+
+[node name="TapperCenter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_w8gus")
+
+[node name="TapperBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_03ysy")
+expand_mode = 1
+
+[node name="TapperArea" parent="." instance=ExtResource("3_jiqcq")]
+position = Vector2(295, 259)
+scale = Vector2(0.7, 0.607)
+
+[node name="RatSpawner" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_1mdfj")
+y_offset = 20.0
+
+[node name="Timer" type="Timer" parent="RatSpawner"]
+one_shot = true 

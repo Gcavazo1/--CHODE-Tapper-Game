@@ -1,0 +1,73 @@
+# INSTRUCTIONS FOR UPDATING MainLayout.tscn
+#
+# 1. This is a text file showing the changes needed for MainLayout.tscn
+# 2. In Godot Editor, open MainLayout.tscn
+# 3. Remove these nodes:
+#    - Margin/MainHBox/CenterArea/TapperAreaPanel/TapperAreaBG
+#    - Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter (and all its children)
+#    - Also remove any RatSpawner node added earlier
+# 4. Add the new TapperCenter scene as a child of TapperAreaPanel:
+#    - Right-click on TapperAreaPanel
+#    - Add Child Node > Instance Child Scene
+#    - Select TapperCenter.tscn
+# 5. Configure the instance:
+#    - Set Layout > Layout Mode to "Full Rect"
+#    - Make sure it appears BEFORE the GirthCounterPanel and NeonLightsContainer in the scene tree
+#
+# Here's how the relevant part of MainLayout.tscn should look after changes:
+
+[node name="TapperAreaPanel" type="Panel" parent="Margin/MainHBox/CenterArea"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_t7xry")
+
+[node name="TapperCenter" parent="Margin/MainHBox/CenterArea/TapperAreaPanel" instance=ExtResource("your_tapper_center_scene_path")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GirthCounterPanel" type="Panel" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+offset_right = 676.0
+offset_bottom = 80.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_thtur")
+
+[node name="GirthCounter" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/GirthCounterPanel" instance=ExtResource("2_girth_counter")]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 1.0
+offset_right = 611.0
+offset_bottom = 77.0
+scale = Vector2(1.1, 1.1)
+size_flags_vertical = 1
+
+[node name="NeonLightsContainer" type="Node2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
+# ... rest of NeonLightsContainer remains the same
+
+# 6. UPDATE THE MAINLAYOUT.GD SCRIPT CONNECTION CODE:
+# In MainLayout.gd, update your signal connections:
+# Change from:
+# tapper_area = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter/TapperArea
+# To:
+# tapper_area = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter.tapper_area
+#
+# Also connect the TapperCenter's signals:
+# var tapper_center = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter
+# if tapper_center:
+#     tapper_center.connect("floating_number_requested", _on_floating_number_requested)
+#     tapper_center.connect("achievement_unlocked", _on_achievement_unlocked)
+
+# 7. SET THE RAT SCENE IN THE EDITOR:
+# In the Godot Editor, with TapperCenter selected in the scene tree:
+# - Find RatSpawner child
+# - In the Inspector, find the "Rat Scene" property
+# - Drag res://scenes/entities/Rat.tscn from the FileSystem panel to this property
+
+# 8. SAVE BOTH SCENES 

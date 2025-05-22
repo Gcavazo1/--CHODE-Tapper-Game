@@ -1,0 +1,104 @@
+[gd_scene load_steps=6 format=3 uid="uid://edoes2qjayab"]
+
+[ext_resource type="Script" uid="uid://biy7dfejj8fuo" path="res://scripts/ui/components/GirthCounter.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
+[ext_resource type="Shader" uid="uid://dt2ympdimi55" path="res://assets/shaders/glitch_text.gdshader" id="3_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_girth_glitch"]
+shader = ExtResource("3_shader")
+shader_parameter/scanline_count = 50.0
+shader_parameter/scanline_speed = 1.2
+shader_parameter/noise_strength = 0.15
+shader_parameter/distortion_strength = 0.002
+shader_parameter/time_scale = 1.0
+shader_parameter/glitch_intensity = 0.35
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_chromatic_aberration"]
+blend_mode = 1
+
+[node name="GirthCounter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -640.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_script")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+rect = Rect2(0, 0, 1280, 80)
+
+[node name="GirthContainer" type="Control" parent="."]
+material = SubResource("ShaderMaterial_girth_glitch")
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="ColorGlitchContainer" type="Control" parent="GirthContainer"]
+material = SubResource("ShaderMaterial_girth_glitch")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GirthLabelRedOffset" type="Label" parent="GirthContainer/ColorGlitchContainer"]
+material = SubResource("CanvasItemMaterial_chromatic_aberration")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.901961, 0, 0.6, 0.929412)
+theme_override_colors/font_shadow_color = Color(0.811765, 0, 0.878431, 0.552941)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 64
+text = "$GIRTH: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GirthLabelGreenOffset" type="Label" parent="GirthContainer/ColorGlitchContainer"]
+material = SubResource("CanvasItemMaterial_chromatic_aberration")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.027451, 0.988235, 0.964706, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.933333, 0.937255, 0.745098)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 64
+text = "$GIRTH: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GirthLabel" type="Label" parent="GirthContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 64
+text = "$GIRTH: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GlitchTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
