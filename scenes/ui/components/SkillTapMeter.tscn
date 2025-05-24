@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://cvq1vj2cmxngu"]
 
-[ext_resource type="Script" uid="uid://bq1q8am8xx32m" path="res://scripts/ui/components/SkillTapMeter.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://conykg5jke6tb" path="res://scripts/ui/components/SkillTapMeter.gd" id="1_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skill_bg"]
 bg_color = Color(0.101961, 0.101961, 0.137255, 0.796078)
@@ -92,7 +92,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 flat = true
 
 [node name="SliderMoveTimer" type="Timer" parent="."]

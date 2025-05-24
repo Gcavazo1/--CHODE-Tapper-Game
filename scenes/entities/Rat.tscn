@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://cuyvtm2dmn6mk"]
 
-[ext_resource type="Script" path="res://scripts/entities/Rat.gd" id="1_fjy36"]
+[ext_resource type="Script" uid="uid://c3e44xxrtov87" path="res://scripts/entities/Rat.gd" id="1_73ua4"]
 [ext_resource type="Texture2D" uid="uid://or6ltofafthw" path="res://assets/art/sprites/rat.png" id="2_3kkqh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r4nbs"]
@@ -99,13 +99,15 @@ animations = [{
 size = Vector2(62, 24)
 
 [node name="Rat" type="CharacterBody2D"]
-script = ExtResource("1_fjy36")
+position = Vector2(365, 176)
+script = ExtResource("1_73ua4")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(34, 50)
 sprite_frames = SubResource("SpriteFrames_f1prr")
 animation = &"walk"
 frame_progress = 0.246275
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
-shape = SubResource("RectangleShape2D_7kk5n") 
+position = Vector2(34, 50)
+shape = SubResource("RectangleShape2D_7kk5n")

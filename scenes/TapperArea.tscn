@@ -1,15 +1,15 @@
 [gd_scene load_steps=19 format=3 uid="uid://b7ws2nwcq7l2a"]
 
-[ext_resource type="Script" uid="uid://cn34j540putwv" path="res://scripts/core/TapperArea.gd" id="1_qwert"]
+[ext_resource type="Script" uid="uid://copdfyv2qf15b" path="res://scripts/core/TapperArea.gd" id="1_qwert"]
 [ext_resource type="Texture2D" uid="uid://bfrton5fj6xxm" path="res://assets/art/chodes/humble_sprout_chode.png" id="2_chode_img_tier0"]
 [ext_resource type="AudioStream" uid="uid://dxbmmabieu2db" path="res://assets/audio/sfx/synth_bloop_01.wav" id="4_tap_sfx"]
 [ext_resource type="AudioStream" uid="uid://cu4pg54cgmhbb" path="res://assets/audio/sfx/megaSlap.wav" id="5_megaslap_sfx"]
 [ext_resource type="Shader" uid="uid://6axhh62nhlbc" path="res://assets/shaders/slime_ripple_particle.gdshader" id="6_roir8"]
 [ext_resource type="Texture2D" uid="uid://bp5sotx8um6l5" path="res://assets/art/chodes/veinous_veridian_chode.png" id="7_chode_img_tier1"]
 [ext_resource type="Texture2D" uid="uid://b40t46fpfxvms" path="res://assets/art/chodes/cracked_core.png" id="8_chode_img_tier2"]
-[ext_resource type="Texture2D" uid="uid://c23fy1652gihj" path="res://assets/art/vfx/50.png" id="8_roir8"]
+[ext_resource type="Texture2D" uid="uid://bbfv0x4k8wygl" path="res://assets/art/vfx/girth_particle_10.png" id="8_n3pgf"]
 [ext_resource type="Shader" uid="uid://cx8te4a8bj3c3" path="res://assets/shaders/edge_light_sprite.gdshader" id="9_edge_light_shader"]
-[ext_resource type="Script" uid="uid://cd8g46rerd1c5" path="res://scripts/ui/ShaderPulseEffect.gd" id="10_n3pgf"]
+[ext_resource type="Script" uid="uid://bk8ycf8fr0wua" path="res://scripts/visuals/ShaderPulseEffect.gd" id="10_n3pgf"]
 
 [sub_resource type="Animation" id="Animation_squash_stretch"]
 resource_name = "squash_stretch"
@@ -132,7 +132,7 @@ shader = ExtResource("9_edge_light_shader")
 shader_parameter/light_color = Color(0.898039, 0, 1, 0.94902)
 shader_parameter/light_pos_uv = Vector2(0.8, 0.12)
 shader_parameter/light_radius = 0.355
-shader_parameter/light_intensity = 0.906
+shader_parameter/light_intensity = 1.1
 shader_parameter/edge_smoothness = 0.5
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_chode_tiers"]
@@ -167,19 +167,19 @@ shader = ExtResource("6_roir8")
 shader_parameter/iResolution = Vector2(64, 64)
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_girth"]
-lifetime_randomness = 0.5
+lifetime_randomness = 0.35
 emission_shape = 2
 emission_sphere_radius = 3.0
-angle_min = 1.07288e-05
-angle_max = 180.0
 direction = Vector3(0, -1, 0)
-initial_velocity_min = 100.0
-initial_velocity_max = 255.25
+spread = 70.0
+initial_velocity_min = 140.0
+initial_velocity_max = 200.0
 gravity = Vector3(0, 250, 0)
-scale_min = 0.1
-scale_max = 0.6
+scale_min = 0.2
+scale_max = 0.4
 
 [node name="TapperArea" type="Node2D"]
+position = Vector2(605, 367)
 script = ExtResource("1_qwert")
 
 [node name="ChodeClickZone" type="TextureButton" parent="."]
@@ -219,14 +219,14 @@ animation = &"tier_0_idle"
 
 [node name="TapParticles" type="GPUParticles2D" parent="."]
 material = SubResource("ShaderMaterial_n3pgf")
-position = Vector2(3, -94)
+position = Vector2(26, -144)
 scale = Vector2(2, 2)
 emitting = false
 amount = 5
-texture = ExtResource("8_roir8")
+texture = ExtResource("8_n3pgf")
 lifetime = 3.0
 one_shot = true
-speed_scale = 1.4
+speed_scale = 1.5
 explosiveness = 1.0
 randomness = 0.5
 process_material = SubResource("ParticleProcessMaterial_girth")
@@ -238,7 +238,7 @@ volume_db = 0.038
 pitch_scale = 1.53
 max_polyphony = 2
 
-[node name="Node" type="Node" parent="." node_paths=PackedStringArray("target_node")]
+[node name="SimulatedNeonPulseEffect" type="Node" parent="." node_paths=PackedStringArray("target_node")]
 script = ExtResource("10_n3pgf")
 target_node = NodePath("../AnimatedChode")
 pulse_speed = 0.6

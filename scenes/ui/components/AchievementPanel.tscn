@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://djo0dd7ofvppk"]
 
-[ext_resource type="Script" uid="uid://1f3a00w384xn" path="res://scripts/ui/components/AchievementPanel.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://blmeeb41fmi7e" path="res://scripts/ui/components/AchievementPanel.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panelbg"]

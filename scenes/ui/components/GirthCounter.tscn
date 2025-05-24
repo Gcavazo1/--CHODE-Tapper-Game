@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://edoes2qjayab"]
 
-[ext_resource type="Script" uid="uid://biy7dfejj8fuo" path="res://scripts/ui/components/GirthCounter.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://jlmqryprku85" path="res://scripts/ui/components/GirthCounter.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
 [ext_resource type="Shader" uid="uid://dt2ympdimi55" path="res://assets/shaders/glitch_text.gdshader" id="3_shader"]
 
@@ -21,16 +21,19 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -640.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
-size_flags_vertical = 0
+size_flags_vertical = 3
 script = ExtResource("1_script")
 
 [node name="BackBufferCopy" type="BackBufferCopy" parent="."]
 copy_mode = 2
 rect = Rect2(0, 0, 1280, 80)
+
+[node name="GlitchTimer" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
 [node name="GirthContainer" type="Control" parent="."]
 material = SubResource("ShaderMaterial_girth_glitch")
@@ -98,7 +101,3 @@ theme_override_font_sizes/font_size = 64
 text = "$GIRTH: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="GlitchTimer" type="Timer" parent="."]
-wait_time = 0.2
-autostart = true

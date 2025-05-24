@@ -1,21 +1,13 @@
-[gd_scene load_steps=24 format=3 uid="uid://iygnr1yulhm"]
+[gd_scene load_steps=13 format=3 uid="uid://iygnr1yulhm"]
 
-[ext_resource type="Script" uid="uid://biuooibxyn6q2" path="res://scripts/ui/MainLayout.gd" id="1_script"]
-[ext_resource type="Shader" uid="uid://dgdvl665cyybt" path="res://assets/shaders/rounded_texture_rect.gdshader" id="2_4jbgb"]
-[ext_resource type="PackedScene" uid="uid://edoes2qjayab" path="res://scenes/ui/components/GirthCounter.tscn" id="2_girth_counter"]
+[ext_resource type="Script" uid="uid://ba0jxr04tgbql" path="res://scripts/ui/MainLayout.gd" id="1_script"]
 [ext_resource type="StyleBox" uid="uid://b7ih064kjqxxn" path="res://assets/art/backgrounds/MainLayoutTOP.tres" id="2_pswwv"]
-[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="2_thtur"]
 [ext_resource type="FontFile" uid="uid://dc44o3ilk6crs" path="res://assets/fonts/BrokenConsoleBold.ttf" id="2_vnoqt"]
 [ext_resource type="PackedScene" uid="uid://07eq8jk5yhlc" path="res://scenes/ui/components/ChargeMeter.tscn" id="3_charge_meter"]
 [ext_resource type="PackedScene" uid="uid://djo0dd7ofvppk" path="res://scenes/ui/components/AchievementPanel.tscn" id="4_achievement_panel"]
-[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="4_ettmo"]
 [ext_resource type="StyleBox" uid="uid://cum5kh7mtvya7" path="res://assets/art/backgrounds/MainLayoutBOTTOMContentPanel.tres" id="4_flqnt"]
 [ext_resource type="PackedScene" uid="uid://cvq1vj2cmxngu" path="res://scenes/ui/components/SkillTapMeter.tscn" id="4_skill_tap_meter"]
 [ext_resource type="StyleBox" uid="uid://b42wyy5telhjm" path="res://assets/art/backgrounds/MainLayout.tres" id="5_g5lb3"]
-[ext_resource type="Texture2D" uid="uid://bj1rvkrmjry62" path="res://assets/art/vfx/neon_light_circle.png" id="6_t7xry"]
-[ext_resource type="Texture2D" uid="uid://cjnlhym25khpe" path="res://assets/art/vfx/neon_light_circle2.png" id="7_d4y2x"]
-[ext_resource type="Script" uid="uid://dko27istes5ny" path="res://scripts/entities/RatSpawner.gd" id="9_g5lb3"]
-[ext_resource type="PackedScene" uid="uid://cuyvtm2dmn6mk" path="res://scenes/entities/Rat.tscn" id="12_flqnt"]
 [ext_resource type="StyleBox" uid="uid://b6bes1n1o3lts" path="res://assets/art/backgrounds/MainLayoutTOPContentPanel.tres" id="15_0qqic"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7xry"]
@@ -28,21 +20,6 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_color = Color(0, 0.913725, 1, 1)
 shadow_size = 8
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_t7xry"]
-shader = ExtResource("2_4jbgb")
-shader_parameter/corner_radius = 24.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_thtur"]
-bg_color = Color(0, 0, 0, 0)
-corner_radius_top_left = 32
-corner_radius_top_right = 32
-corner_radius_bottom_right = 32
-corner_radius_bottom_left = 32
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vnoqt"]
-shader = ExtResource("2_4jbgb")
-shader_parameter/corner_radius = 100.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4jbgb"]
 bg_color = Color(0, 0, 0, 0.745098)
@@ -309,81 +286,6 @@ size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_t7xry")
 
-[node name="TapperAreaBG" type="TextureRect" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
-material = SubResource("ShaderMaterial_t7xry")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_thtur")
-expand_mode = 1
-
-[node name="TapperCenter" type="Control" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TapperArea" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter" instance=ExtResource("4_ettmo")]
-position = Vector2(295, 259)
-scale = Vector2(0.7, 0.607)
-
-[node name="RatSpawner" type="Control" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("9_g5lb3")
-rat_scene = ExtResource("12_flqnt")
-y_offset = -16.0
-
-[node name="Timer" type="Timer" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter/RatSpawner"]
-
-[node name="GirthCounterPanel" type="Panel" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
-offset_right = 676.0
-offset_bottom = 80.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_thtur")
-
-[node name="GirthCounter" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/GirthCounterPanel" instance=ExtResource("2_girth_counter")]
-layout_mode = 2
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 1.0
-offset_right = 611.0
-offset_bottom = 77.0
-scale = Vector2(1.1, 1.1)
-size_flags_vertical = 1
-
-[node name="NeonLightsContainer" type="Node2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel"]
-
-[node name="NeonSignRightSide" type="PointLight2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer"]
-material = SubResource("ShaderMaterial_vnoqt")
-position = Vector2(540, 116)
-scale = Vector2(0.505689, 0.522803)
-color = Color(0.898039, 0, 1, 0.94902)
-shadow_color = Color(0.746644, 0.00131156, 0.568267, 1)
-texture = ExtResource("6_t7xry")
-texture_scale = 1.55
-height = 215.0
-
-[node name="NeonSignLeftSide" type="PointLight2D" parent="Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer"]
-position = Vector2(103.5, 116)
-scale = Vector2(0.898581, 1.02341)
-color = Color(0.898039, 0, 1, 0.94902)
-energy = 0.35
-texture = ExtResource("7_d4y2x")
-texture_scale = 1.1
-height = 200.0
-
 [node name="HUDMessagesPanel" type="HBoxContainer" parent="Margin/MainHBox/CenterArea"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
@@ -393,6 +295,7 @@ theme_override_constants/separation = 8
 [node name="HUDSectionPanel" type="Panel" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_4jbgb")
 
 [node name="ChargeAndSkillMeterContainer" type="VBoxContainer" parent="Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel"]

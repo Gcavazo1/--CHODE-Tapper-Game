@@ -3,14 +3,14 @@ extends Control
 # External scene references
 var floating_number_scene = preload("res://scenes/ui/components/FloatingNumber.tscn")
 
-# Component references
-@onready var girth_counter = $Margin/MainHBox/CenterArea/TapperAreaPanel/GirthCounterPanel/GirthCounter
+# Component references - updated for new structure where TapperCenter is a sibling
+@onready var tapper_center_node = get_parent().get_node("TapperCenter") # The TapperCenter instance in Main.tscn is named "TapperCenter"
+@onready var girth_counter = get_parent().get_node("GirthCounterMainContainer/GirthCounter") # GirthCounter is now directly in Main
 @onready var charge_meter = $Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/ChargeAndSkillMeterContainer/ChargeMeterContainer/ChargeMeter
 @onready var skill_tap_meter = $Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/ChargeAndSkillMeterContainer/SkillTapMeter
 @onready var achievement_panel = $Margin/MainHBox/CenterArea/HUDMessagesPanel/HUDSectionPanel/NotificationsContainer/AchievementPanel
 @onready var tapper_area_panel = $Margin/MainHBox/CenterArea/TapperAreaPanel
-@onready var tapper_area = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter/TapperArea
-@onready var tapper_center_node = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperCenter
+@onready var tapper_area = tapper_center_node.get_node("TapperPanelContainer/TapperCenterNode2D/TapperArea") if tapper_center_node else null
 
 # Top left panel tab references
 @onready var upgrade1_button = $Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn/Upgrade1Button
@@ -53,18 +53,18 @@ var floating_number_scene = preload("res://scenes/ui/components/FloatingNumber.t
 @onready var right_bottom_style_panel = $Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel
 
 # Neon light reference and properties
-@onready var neon_sign_right = $Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignRightSide
-var neon_pulse_time: float = 0.0
-var neon_pulse_speed: float = 0.6  # Seconds per complete pulse cycle
-var neon_min_energy: float = 0.75	
-var neon_max_energy: float = 2.75
+# @onready var neon_sign_right = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperAreaBG/NeonLightsContainer/NeonSignRightSide
+# var neon_pulse_time: float = 0.0
+# var neon_pulse_speed: float = 0.6  # Seconds per complete pulse cycle
+# var neon_min_energy: float = 0.75
+# var neon_max_energy: float = 2.75
 
 # Left neon light reference and properties
-@onready var neon_sign_left = $Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignLeftSide
-var neon_left_pulse_time: float = 0.0
-var neon_left_pulse_speed: float = 0.8  # 2 seconds per cycle (1/2)
-var neon_left_min_energy: float = 0.55
-var neon_left_max_energy: float = 1.5
+# @onready var neon_sign_left = $Margin/MainHBox/CenterArea/TapperAreaPanel/TapperAreaBG/NeonLightsContainer/NeonSignLeftSide
+# var neon_left_pulse_time: float = 0.0
+# var neon_left_pulse_speed: float = 0.8  # 2 seconds per cycle (1/2)
+# var neon_left_min_energy: float = 0.55
+# var neon_left_max_energy: float = 1.5
 
 # Signal for when the $GIRTH counter is updated
 signal girth_counter_updated(new_value)
@@ -83,39 +83,56 @@ var current_right_bottom_tab = "settings"
 func _ready():
 	print("MainLayout: Ready")
 	
+	# Debug tapper_center_node path
+	print("Looking for TapperCenter node as a sibling...")
+	if tapper_center_node:
+		print("Found TapperCenter instance (as TapperCenter)!")
+	else:
+		print("ERROR: Could not find TapperCenter instance (TapperCenter) as a sibling!")
+		
 	# Connect tab button signals
 	_connect_tab_buttons()
 	
 	# Debug neon light node path
-	print("Searching for neon light node...")
-	var neon_node = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignRightSide")
-	if neon_node:
-		print("Found neon light node! Initial energy: ", neon_node.energy)
+	# print("Searching for neon light node...")
+	# var neon_node = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignRightSide")
+	# if neon_node:
+		# print("Found neon light node! Initial energy: ", neon_node.energy)
 		
 		# Optional - set the neon_sign_right variable directly
-		if neon_sign_right == null:
-			neon_sign_right = neon_node
-	else:
-		print("NEON LIGHT NODE NOT FOUND. Trying alternative path...")
+		# if neon_sign_right == null:
+			# neon_sign_right = neon_node
+	# else:
+		# print("NEON LIGHT NODE NOT FOUND. Trying alternative path...")
 		
 		# Try alternative paths to locate the node
-		var container = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer")
-		if container:
-			print("Found NeonLightsContainer. Children: ", container.get_child_count())
-			for i in range(container.get_child_count()):
-				print("Child ", i, ": ", container.get_child(i).name)
-				if container.get_child(i) is PointLight2D:
-					print("Found PointLight2D child: ", container.get_child(i).name)
-		else:
-			print("Could not find NeonLightsContainer")
+		# var container = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer")
+		# if container:
+			# print("Found NeonLightsContainer. Children: ", container.get_child_count())
+			# for i in range(container.get_child_count()):
+				# print("Child ", i, ": ", container.get_child(i).name)
+				# if container.get_child(i) is PointLight2D:
+					# print("Found PointLight2D child: ", container.get_child(i).name)
+		# else:
+			# print("Could not find NeonLightsContainer")
 	
 	# Connect to directly instanced TapperArea signals
 	if tapper_area:
 		print("MainLayout: Found TapperArea, connecting signals")
 		if tapper_area.has_signal("floating_number_requested"):
+			# Disconnect first to avoid duplicate connections if reconnecting
+			if tapper_area.is_connected("floating_number_requested", _on_floating_number_requested):
+				tapper_area.disconnect("floating_number_requested", _on_floating_number_requested)
 			tapper_area.connect("floating_number_requested", _on_floating_number_requested)
+			print("MainLayout: Connected to floating_number_requested signal from TapperArea")
+		else:
+			print("MainLayout: WARNING - TapperArea does not have floating_number_requested signal")
+		
 		if tapper_area.has_signal("achievement_unlocked"):
+			if tapper_area.is_connected("achievement_unlocked", _on_achievement_unlocked):
+				tapper_area.disconnect("achievement_unlocked", _on_achievement_unlocked)
 			tapper_area.connect("achievement_unlocked", _on_achievement_unlocked)
+			print("MainLayout: Connected to achievement_unlocked signal from TapperArea")
 	else:
 		print("MainLayout: ERROR - TapperArea not found!")
 	
@@ -395,31 +412,33 @@ func _update_shop_content(content_text: String):
 
 # Handle neon light pulsing in _process
 func _process(delta):
+	# --- Moved to TapperCenter.gd ---
 	# Update neon pulse time
-	neon_pulse_time += delta
-	neon_left_pulse_time += delta
+	# neon_pulse_time += delta
+	# neon_left_pulse_time += delta
 	
 	# Find neon light if reference is null
-	if neon_sign_right == null:
-		neon_sign_right = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignRightSide")
-		if neon_sign_right:
-			print("Found neon light in _process!")
-	if neon_sign_left == null:
-		neon_sign_left = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/NeonLightsContainer/NeonSignLeftSide")
-		if neon_sign_left:
-			print("Found left neon light in _process!")
+	# if neon_sign_right == null:
+		# neon_sign_right = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/TapperAreaBG/NeonLightsContainer/NeonSignRightSide")
+		# if neon_sign_right:
+			# print("Found neon light in _process!")
+	# if neon_sign_left == null:
+		# neon_sign_left = get_node_or_null("Margin/MainHBox/CenterArea/TapperAreaPanel/TapperAreaBG/NeonLightsContainer/NeonSignLeftSide")
+		# if neon_sign_left:
+			# print("Found left neon light in _process!")
 	
 	# Animate neon light energy if reference exists
-	if neon_sign_right:
+	# if neon_sign_right:
 		# Calculate pulse value (0 to 1 to 0) using sine wave
-		var pulse_factor = (sin(neon_pulse_time * PI * neon_pulse_speed) + 1) / 2
+		# var pulse_factor = (sin(neon_pulse_time * PI * neon_pulse_speed) + 1) / 2
 		# Apply energy value between min and max
-		neon_sign_right.energy = lerp(neon_min_energy, neon_max_energy, pulse_factor)
-	if neon_sign_left:
+		# neon_sign_right.energy = lerp(neon_min_energy, neon_max_energy, pulse_factor)
+	# if neon_sign_left:
 		# Calculate pulse value (0 to 1 to 0) using sine wave
-		var left_pulse_factor = (sin(neon_left_pulse_time * PI * neon_left_pulse_speed) + 1) / 2
+		# var left_pulse_factor = (sin(neon_left_pulse_time * PI * neon_left_pulse_speed) + 1) / 2
 		# Apply energy value between min and max
-		neon_sign_left.energy = lerp(neon_left_min_energy, neon_left_max_energy, left_pulse_factor)
+		# neon_sign_left.energy = lerp(neon_left_min_energy, neon_left_max_energy, left_pulse_factor)
+	pass # Add pass if _process becomes empty after moving code
 
 # Called to update the $GIRTH counter
 func update_girth_counter(value: int) -> void:
@@ -449,8 +468,6 @@ func spawn_floating_number(global_tap_pos: Vector2, value: String = "+1", durati
 		instance.position += Vector2(randf_range(-20, 20), randf_range(-40, -20))
 
 		instance.value = value # Make sure this is a property the FloatingNumber script uses
-		# If FloatingNumber has a set_value method, that's fine too.
-		# instance.set_value(value) # Assuming FloatingNumber.gd has set_value(text)
 		
 		if duration != 1.5:
 			# Ensure the path to AnimationTimer is correct within FloatingNumber.tscn
@@ -461,12 +478,9 @@ func spawn_floating_number(global_tap_pos: Vector2, value: String = "+1", durati
 				push_error("FloatingNumber is missing AnimationTimer node!")
 		
 		# If set_value isn't a direct property, ensure it's called if it exists
-		# This was in your original code, ensure FloatingNumber.gd handles it.
 		if instance.has_method("set_value"):
 			instance.set_value(value)
-		elif "value" not in instance: # If it's not a property and not a method
-			push_warning("FloatingNumber has no 'value' property or 'set_value' method.")
-
+		
 		return instance
 	else:
 		if not tapper_center_node:

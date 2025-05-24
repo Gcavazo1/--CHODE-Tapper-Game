@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://qde5e6pa8aa2"]
 
-[ext_resource type="Script" uid="uid://374yv7moobri" path="res://scripts/ui/components/FloatingNumber.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b20nb2qaqixqg" path="res://scripts/ui/components/FloatingNumber.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
 [ext_resource type="Shader" uid="uid://dt2ympdimi55" path="res://assets/shaders/glitch_text.gdshader" id="3_glitch_shader"]
 

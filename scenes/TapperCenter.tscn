@@ -1,42 +1,86 @@
-[gd_scene load_steps=5 format=3 uid="uid://cpjggrg8y0u5h"]
+[gd_scene load_steps=13 format=3 uid="uid://cpjggrg8y0u5h"]
 
-[ext_resource type="Script" path="res://scripts/core/TapperCenter.gd" id="1_w8gus"]
-[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="2_03ysy"]
-[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="3_jiqcq"]
-[ext_resource type="Script" path="res://scripts/entities/RatSpawner.gd" id="4_1mdfj"]
+[ext_resource type="Shader" uid="uid://dgdvl665cyybt" path="res://assets/shaders/rounded_texture_rect.gdshader" id="1_n5din"]
+[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="1_wehm1"]
+[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="1_y563b"]
+[ext_resource type="Texture2D" uid="uid://bj1rvkrmjry62" path="res://assets/art/vfx/neon_light_circle.png" id="2_lig7u"]
+[ext_resource type="Script" uid="uid://dnwo3dxae0sa" path="res://scripts/core/TapperCenter.gd" id="2_tappercenter_script"]
+[ext_resource type="Texture2D" uid="uid://cjnlhym25khpe" path="res://assets/art/vfx/neon_light_circle2.png" id="4_2r7vr"]
+[ext_resource type="Script" uid="uid://cqf2w5ulfatrq" path="res://scripts/entities/RatSpawner.gd" id="7_2r7vr"]
+[ext_resource type="PackedScene" uid="uid://cuyvtm2dmn6mk" path="res://scenes/entities/Rat.tscn" id="8_4x851"]
 
-[node name="TapperCenter" type="Control"]
-layout_mode = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t045l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4x851"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5din"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2r7vr"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 36.0
+
+[node name="TapperCenter" type="Node2D"]
+script = ExtResource("2_tappercenter_script")
+
+[node name="TapperPanelContainer" type="PanelContainer" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 676.0
+offset_bottom = 453.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_w8gus")
+theme_override_styles/panel = SubResource("StyleBoxFlat_t045l")
 
-[node name="TapperBG" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_03ysy")
-expand_mode = 1
+[node name="NeonLightsContainer" type="Node2D" parent="TapperPanelContainer"]
 
-[node name="TapperArea" parent="." instance=ExtResource("3_jiqcq")]
-position = Vector2(295, 259)
+[node name="NeonSignRightSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+material = SubResource("ShaderMaterial_4x851")
+position = Vector2(548, 105)
+scale = Vector2(0.491551, 0.583982)
+color = Color(0.898039, 0, 1, 0.541176)
+shadow_color = Color(0.746644, 0.00131156, 0.568267, 1)
+texture = ExtResource("2_lig7u")
+texture_scale = 1.55
+height = 146.0
+
+[node name="NeonSignLeftSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+position = Vector2(100.5, 105)
+scale = Vector2(1.05623, 1.14317)
+color = Color(0.898039, 0, 1, 0.94902)
+energy = 0.35
+texture = ExtResource("4_2r7vr")
+texture_scale = 1.1
+height = 200.0
+
+[node name="TapperBG" type="TextureRect" parent="TapperPanelContainer"]
+material = SubResource("ShaderMaterial_n5din")
+layout_mode = 2
+texture = ExtResource("1_wehm1")
+expand_mode = 3
+
+[node name="RatSpawner" type="Control" parent="TapperPanelContainer"]
+material = SubResource("ShaderMaterial_2r7vr")
+clip_contents = true
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("7_2r7vr")
+rat_scene = ExtResource("8_4x851")
+min_spawn_interval = 6.0
+max_spawn_interval = 20.0
+min_rat_speed = 70.0
+max_rat_speed = 150.0
+y_position_offset = -55.0
+
+[node name="Timer" type="Timer" parent="TapperPanelContainer/RatSpawner"]
+
+[node name="TapperCenterNode2D" type="Node2D" parent="TapperPanelContainer"]
+
+[node name="TapperArea" parent="TapperPanelContainer/TapperCenterNode2D" instance=ExtResource("1_y563b")]
+position = Vector2(293, 238)
 scale = Vector2(0.7, 0.607)
-
-[node name="RatSpawner" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("4_1mdfj")
-y_offset = 20.0
-
-[node name="Timer" type="Timer" parent="RatSpawner"]
-one_shot = true 

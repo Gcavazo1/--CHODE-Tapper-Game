@@ -1,11 +1,36 @@
-[gd_scene load_steps=4 format=3 uid="uid://c6vuxwng8t8qk"]
+[gd_scene load_steps=7 format=3 uid="uid://c6vuxwng8t8qk"]
 
-[ext_resource type="Script" uid="uid://crtiht4ik77pj" path="res://scripts/core/Main.gd" id="1_main_script"]
+[ext_resource type="Script" uid="uid://nnyp7bc32nci" path="res://scripts/core/Main.gd" id="1_main_script"]
 [ext_resource type="Texture2D" uid="uid://bmwgu3d13utv5" path="res://assets/art/backgrounds/globalBG63.jpg" id="2_0bbpv"]
+[ext_resource type="PackedScene" uid="uid://edoes2qjayab" path="res://scenes/ui/components/GirthCounter.tscn" id="2_vcsgt"]
+[ext_resource type="PackedScene" uid="uid://cpjggrg8y0u5h" path="res://scenes/TapperCenter.tscn" id="4_rarhs"]
 [ext_resource type="PackedScene" uid="uid://iygnr1yulhm" path="res://scenes/ui/MainLayout.tscn" id="5_main_layout"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vcsgt"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_main_script")
+
+[node name="GirthCounterMainContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1280.0
+offset_bottom = 98.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_vcsgt")
+
+[node name="GirthCounter" parent="GirthCounterMainContainer" instance=ExtResource("2_vcsgt")]
+z_index = 1
+layout_mode = 2
 
 [node name="Background" type="TextureRect" parent="."]
 z_index = -1
@@ -25,3 +50,6 @@ offset_right = 1280.0
 offset_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="TapperCenter" parent="." instance=ExtResource("4_rarhs")]
+position = Vector2(305, 12)

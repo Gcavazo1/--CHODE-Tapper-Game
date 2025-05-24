@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://07eq8jk5yhlc"]
 
-[ext_resource type="Script" uid="uid://c5iyei2q8iuft" path="res://scripts/ui/components/ChargeMeter.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://ooin18yapr2p" path="res://scripts/ui/components/ChargeMeter.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
-[ext_resource type="Texture2D" uid="uid://bisgpjlqpoddf" path="res://assets/art/vfx/lightning11.png" id="3_lightning"]
+[ext_resource type="Texture2D" uid="uid://c4fnaflk8c7oa" path="res://assets/art/vfx/neon_meter.png" id="3_2vn48"]
 
 [sub_resource type="Theme" id="Theme_meter_label"]
 default_font = ExtResource("2_font")
@@ -88,11 +88,12 @@ show_percentage = false
 
 [node name="ChargeOverlay" type="TextureRect" parent="MeterContainer/MeterProgress"]
 layout_mode = 0
-offset_top = -54.0
-offset_right = 406.0
-offset_bottom = 181.0
-scale = Vector2(0.7, 0.55)
-texture = ExtResource("3_lightning")
+offset_left = 0.5
+offset_top = -52.0
+offset_right = 634.5
+offset_bottom = 183.0
+scale = Vector2(0.42, 0.4)
+texture = ExtResource("3_2vn48")
 stretch_mode = 5
 
 [node name="ReadyLabel" type="Label" parent="MeterContainer/MeterProgress"]
