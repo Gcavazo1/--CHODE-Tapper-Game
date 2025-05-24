@@ -11,7 +11,7 @@ var max_intensity: float = 2.0       # Maximum light intensity
 @export var shader_param_name: String = "light_intensity"
 @export_range(0.1, 3.0) var pulse_speed: float = 0.5
 @export_range(0.0, 1.0) var min_value: float = 0.5
-@export_range(1.0, 5.0) var max_value: float = 2.0
+@export_range(0.5, 5.0) var max_value: float = 2.0
 
 # Reference to the shader material
 var shader_material: ShaderMaterial

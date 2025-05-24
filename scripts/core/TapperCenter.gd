@@ -17,7 +17,7 @@ var neon_min_energy: float = 0.75
 var neon_max_energy: float = 2.75
 
 var neon_left_pulse_time: float = 0.0
-var neon_left_pulse_speed: float = 0.8  # 2 seconds per cycle (1/2)
+var neon_left_pulse_speed: float = 0.5  # 2 seconds per cycle (1/2)
 var neon_left_min_energy: float = 0.55
 var neon_left_max_energy: float = 1.5
 
@@ -69,8 +69,4 @@ func _on_tapper_area_floating_number_requested(value, position):
 func _on_tapper_area_achievement_unlocked(title, description, duration):
 	emit_signal("achievement_unlocked", title, description, duration)
 
-# Public methods that might be called from MainLayout
-# Provide access to TapperArea's trigger_girthquake_shake
-func trigger_girthquake_shake(amplitude: float = 4.0, duration: float = 0.1):
-	if tapper_area and tapper_area.has_method("trigger_girthquake_shake"):
-		tapper_area.trigger_girthquake_shake(amplitude, duration)
+# Public methods that might be called from MainLayout can be added here if needed

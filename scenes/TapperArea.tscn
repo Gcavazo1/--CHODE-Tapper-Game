@@ -129,9 +129,9 @@ _data = {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_chode_custom_light"]
 shader = ExtResource("9_edge_light_shader")
-shader_parameter/light_color = Color(0.898039, 0, 1, 0.94902)
+shader_parameter/light_color = Color(1, 0, 0.6, 0.733333)
 shader_parameter/light_pos_uv = Vector2(0.8, 0.12)
-shader_parameter/light_radius = 0.355
+shader_parameter/light_radius = 0.4
 shader_parameter/light_intensity = 1.1
 shader_parameter/edge_smoothness = 0.5
 
@@ -238,7 +238,7 @@ volume_db = 0.038
 pitch_scale = 1.53
 max_polyphony = 2
 
-[node name="SimulatedNeonPulseEffect" type="Node" parent="." node_paths=PackedStringArray("target_node")]
+[node name="SimulatedNeonPulseEffectRight" type="Node" parent="." node_paths=PackedStringArray("target_node")]
 script = ExtResource("10_n3pgf")
 target_node = NodePath("../AnimatedChode")
 pulse_speed = 0.6

@@ -55,6 +55,14 @@ func _ready():
 		# For button scaling animations
 		click_button.pivot_offset = click_button.size / 2.0
 	
+	# Make the neon light reflection invisible except for shader effect
+	var light_reflection = $NeonLightReflectionLeft
+	if light_reflection:
+		# Make the ColorRect itself invisible but let shader do its work
+		light_reflection.color = Color(0, 0, 0, 0)
+		# Set blend mode to add light only (not supported through script in Godot 4)
+		# You'll need to set this in the editor: CanvasItemMaterial with Blend Mode = Add
+	
 	print("TapperArea ready.")
 
 	# Connect to Global signals for Girth updates
@@ -173,14 +181,9 @@ func _on_pressed():
 				# Normal tap animation
 				animation_player.play("squash_stretch")
 
-		# Trigger screen shake on the Main node - enhanced for Mega Slap
-		var main_layout_node = get_tree().get_first_node_in_group("MainLayout")
-		# Check if the node is valid and has the method to avoid errors
-		if is_instance_valid(main_layout_node) and main_layout_node.has_method("trigger_girthquake_shake"):
-			if girth_multiplier > 1: # Mega Slap (not Giga)
-				main_layout_node.trigger_girthquake_shake(12.0, 0.6)  # Stronger, longer shake for Mega Slap
-			else:
-				main_layout_node.trigger_girthquake_shake()  # Normal shake
+		# Screen shake on normal/mega taps removed as per request for milestone/evolution shakes only
+		# If you want shakes on every tap, this is where you would add:
+		# emit_signal("girthquake_requested", TAP_SHAKE_AMPLITUDE, TAP_SHAKE_DURATION)
 
 		# Play tap sound effect - use different sound for Mega Slap
 		if girth_multiplier > 1 and mega_slap_sfx_player: # Mega Slap (not Giga)
@@ -418,11 +421,6 @@ func _celebrate_evolution(tier: int):
 			# For tier 2, add extra floating text celebration
 			await get_tree().create_timer(0.3).timeout
 			emit_signal("floating_number_requested", "CORE CRACKED!", global_position - Vector2(0, 110))
-			
-			# Trigger an extra intense screen shake for the ultimate evolution
-			var main_node = get_parent()
-			if main_node and main_node.has_method("trigger_girthquake_shake"):
-				main_node.trigger_girthquake_shake(15.0, 0.8)  # Stronger, longer shake for ultimate evolution
 
 
 # Placeholder for functions to update Chode visuals for more tiers later
