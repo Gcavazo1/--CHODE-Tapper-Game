@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://07eq8jk5yhlc"]
+[gd_scene load_steps=8 format=3 uid="uid://07eq8jk5yhlc"]
 
 [ext_resource type="Script" uid="uid://ooin18yapr2p" path="res://scripts/ui/components/ChargeMeter.gd" id="1_script"]
 [ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_font"]
@@ -19,6 +19,8 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ahoco"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_charge_fill"]
 bg_color = Color(1, 0.45098, 0, 1)
@@ -56,6 +58,11 @@ alignment = 1
 layout_mode = 2
 size_flags_vertical = 1
 theme = SubResource("Theme_meter_label")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
 text = "CHARGE"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -75,6 +82,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_charge_bg")
 
 [node name="ChargeMeter" type="ProgressBar" parent="MeterContainer/MeterProgress"]
+material = SubResource("ShaderMaterial_ahoco")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -112,11 +120,12 @@ grow_vertical = 2
 scale = Vector2(1.75, 1.75)
 pivot_offset = Vector2(35, 13)
 theme = SubResource("Theme_meter_label")
-theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(0, 0.550682, 0.897692, 1)
-theme_override_constants/outline_size = 6
-theme_override_constants/shadow_outline_size = 5
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.239216, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
 theme_override_fonts/font = ExtResource("2_font")
 text = "READY!"
 horizontal_alignment = 1

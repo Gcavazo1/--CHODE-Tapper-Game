@@ -31,7 +31,8 @@ project/assembly_name="$CHODE Tapper - Genesis Tap Demo"
 
 [editor]
 
-movie_writer/movie_file="C:/Users/gcava/flutter project/inspiration/X.com/ChodeTapperTeaser.avi"
+movie_writer/mjpeg_quality=0.9
+movie_writer/movie_file="C:/Users/gcava/flutter project/inspiration/X.com/chode.avi"
 
 [editor_plugins]
 
@@ -62,5 +63,6 @@ tap={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

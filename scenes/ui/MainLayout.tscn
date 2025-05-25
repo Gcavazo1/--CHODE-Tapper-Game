@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://iygnr1yulhm"]
+[gd_scene load_steps=20 format=3 uid="uid://iygnr1yulhm"]
 
 [ext_resource type="Script" uid="uid://ba0jxr04tgbql" path="res://scripts/ui/MainLayout.gd" id="1_script"]
 [ext_resource type="StyleBox" uid="uid://b7ih064kjqxxn" path="res://assets/art/backgrounds/MainLayoutTOP.tres" id="2_pswwv"]
@@ -8,7 +8,14 @@
 [ext_resource type="StyleBox" uid="uid://cum5kh7mtvya7" path="res://assets/art/backgrounds/MainLayoutBOTTOMContentPanel.tres" id="4_flqnt"]
 [ext_resource type="PackedScene" uid="uid://cvq1vj2cmxngu" path="res://scenes/ui/components/SkillTapMeter.tscn" id="4_skill_tap_meter"]
 [ext_resource type="StyleBox" uid="uid://b42wyy5telhjm" path="res://assets/art/backgrounds/MainLayout.tres" id="5_g5lb3"]
+[ext_resource type="FontFile" uid="uid://cc4s6vllj27ks" path="res://assets/fonts/OffBitDotBold.ttf" id="12_flqnt"]
 [ext_resource type="StyleBox" uid="uid://b6bes1n1o3lts" path="res://assets/art/backgrounds/MainLayoutTOPContentPanel.tres" id="15_0qqic"]
+[ext_resource type="Script" uid="uid://c2s8h233ayyl5" path="res://scripts/ui/managers/AchievementUIManager.gd" id="placeholder_ach_ui_manager_id"]
+[ext_resource type="Script" uid="uid://ceidytjmchay1" path="res://scripts/ui/managers/ChargeMeterUIManager.gd" id="placeholder_charge_meter_ui_id"]
+[ext_resource type="Script" uid="uid://k4n5kasw4v7s" path="res://scripts/ui/managers/EffectsManager.gd" id="placeholder_fx_manager_id"]
+[ext_resource type="Script" uid="uid://dx5i7envvqp2j" path="res://scripts/ui/managers/GameStatsUIManager.gd" id="placeholder_game_stats_ui_id"]
+[ext_resource type="Script" uid="uid://cs7dqmuyp7m8u" path="res://scripts/ui/managers/SkillTapUIManager.gd" id="placeholder_skill_tap_ui_id"]
+[ext_resource type="Script" uid="uid://cg5cgsumoe6cd" path="res://scripts/ui/managers/UINavigationManager.gd" id="placeholder_ui_nav_manager_id"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t7xry"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -58,6 +65,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
+metadata/_edit_vertical_guides_ = [-87.0]
+
+[node name="UINavigationManager" type="Node" parent="."]
+script = ExtResource("placeholder_ui_nav_manager_id")
+
+[node name="AchievementUIManager" type="Node" parent="."]
+script = ExtResource("placeholder_ach_ui_manager_id")
+
+[node name="EffectsManager" type="Node" parent="."]
+script = ExtResource("placeholder_fx_manager_id")
+
+[node name="SkillTapUIManager" type="Node" parent="." groups=["SkillTapUIManagerGroup"]]
+script = ExtResource("placeholder_skill_tap_ui_id")
+
+[node name="ChargeMeterUIManager" type="Node" parent="."]
+script = ExtResource("placeholder_charge_meter_ui_id")
+
+[node name="GameStatsUIManager" type="Node" parent="."]
+script = ExtResource("placeholder_game_stats_ui_id")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -104,16 +130,28 @@ size_flags_horizontal = 3
 
 [node name="Upgrade1Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 1"
 
 [node name="Upgrade2Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 2"
 
 [node name="Upgrade3Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 3"
 
@@ -123,16 +161,27 @@ size_flags_horizontal = 3
 
 [node name="Upgrade4Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 4"
 
 [node name="Upgrade5Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(1, 1, 1, 0)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 5"
 
 [node name="Upgrade6Button" type="Button" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "UPGRADE 6"
 
@@ -153,6 +202,8 @@ alignment = 1
 
 [node name="UpgradeContent" type="Label" parent="Margin/MainHBox/LeftPanel/TopLeftContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer/TopContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Upgrade content will appear here"
 horizontal_alignment = 1
@@ -181,16 +232,25 @@ size_flags_horizontal = 3
 
 [node name="AchievementsButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.699653, 0.699653, 0.699653, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "ACHIEVEMENTS"
 
 [node name="TrophiesButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.699653, 0.699653, 0.699653, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "TROPHIES"
 
 [node name="EmptyButton1" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "EMPTY"
 
@@ -200,16 +260,25 @@ size_flags_horizontal = 3
 
 [node name="BlockchainButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "BLOCKCHAIN"
 
 [node name="EmptyButton2" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "EMPTY"
 
 [node name="EmptyButton3" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "EMPTY"
 
@@ -230,6 +299,8 @@ alignment = 1
 
 [node name="Achievement1Label" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/AchievementsContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
 theme_override_constants/line_spacing = 1
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Placeholder: Achieve 100 Girth"
@@ -237,42 +308,50 @@ autowrap_mode = 3
 
 [node name="Achievement2Label" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/AchievementsContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Placeholder: Unlock Veinous Veridian"
 autowrap_mode = 3
 
-[node name="TrophiesContentVBox" type="GridContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
-visible = false
+[node name="TrophiesContentVBox" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-columns = 3
 
 [node name="TrophyPlaceholder1" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/TrophiesContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Trophy 1"
-autowrap_mode = 3
-
-[node name="TrophyPlaceholder2" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/TrophiesContentVBox"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "Trophy 2"
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="BlockchainContentVBox" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="WalletAddressLabel" type="Label" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/BlockchainContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
+theme_override_constants/line_spacing = 0
+theme_override_constants/paragraph_spacing = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Wallet Info: Coming Soon"
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="ConnectWalletButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/BlockchainContentVBox"]
 layout_mode = 2
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
+theme_override_fonts/font = ExtResource("12_flqnt")
+theme_override_font_sizes/font_size = 18
 text = "Connect Wallet (Future Feature)"
+autowrap_mode = 3
 
 [node name="CenterArea" type="VBoxContainer" parent="Margin/MainHBox"]
 layout_mode = 2
@@ -369,16 +448,25 @@ size_flags_horizontal = 3
 
 [node name="ShopTab1Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "STORE"
+text = "Girth Bazaar"
 
 [node name="ShopTab2Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "PREMIUM"
 
 [node name="ShopTab3Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "BOOSTS"
 
@@ -388,16 +476,25 @@ size_flags_horizontal = 3
 
 [node name="ShopTab4Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "NFT"
 
 [node name="ShopTab5Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "SKINS"
 
 [node name="ShopTab6Button" type="Button" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "SPECIAL"
 
@@ -418,6 +515,8 @@ alignment = 1
 
 [node name="StoreContentLabel" type="Label" parent="Margin/MainHBox/RightPanel/TopRightContainer/TopStylePanel/TopContent/TopContentPanel/TopScrollContainer/StoreContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Storefront under construction"
 horizontal_alignment = 1
@@ -446,18 +545,27 @@ size_flags_horizontal = 3
 
 [node name="SettingsButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "SETTINGS"
 
 [node name="StatsButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "STATS"
 
 [node name="EmptyButton1" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/LeftColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "WALLET"
+text = "EMPTY	"
 
 [node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox"]
 layout_mode = 2
@@ -465,16 +573,25 @@ size_flags_horizontal = 3
 
 [node name="InfoButton" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "INFO"
 
 [node name="EmptyButton2" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "LEADERBOARD"
 
 [node name="EmptyButton3" type="Button" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "EMPTY"
 
@@ -495,13 +612,14 @@ alignment = 1
 
 [node name="SettingsLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/SettingsContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Settings coming soon..."
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="StatsContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -509,13 +627,14 @@ alignment = 1
 
 [node name="StatsLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/StatsContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Player statistics will be shown here"
 horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="InfoContentVBox" type="VBoxContainer" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -523,6 +642,8 @@ alignment = 1
 
 [node name="InfoLabel" type="Label" parent="Margin/MainHBox/RightPanel/BottomRightContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/InfoContentVBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Game info and help will be displayed here"
 horizontal_alignment = 1

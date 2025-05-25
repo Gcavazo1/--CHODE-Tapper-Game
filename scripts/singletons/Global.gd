@@ -59,6 +59,21 @@ var giga_slap_time_window: int = 30000 # 30 seconds in milliseconds
 # Flag to indicate if the Giga Slap minigame is currently active
 var is_giga_slap_minigame_active: bool = false
 
+# Tap tracking for achievements
+var total_taps: int = 0 # Track total taps for achievements
+var taps_per_second: float = 0.0 # Current taps per second rate
+var recent_taps: Array = [] # Array to track timestamps of recent taps
+var taps_in_last_minute: int = 0 # Taps in the last 60 seconds
+var minute_tap_timer: Timer # Timer to track minute-based tapping achievements
+var no_tap_timer: Timer # Timer to track periods of no tapping
+var blue_chode_time: float = 10.0 # Seconds to wait with full meter for Blue Chode achievement
+var blue_chode_timer: Timer # Timer to track time with full meter without tapping
+var consecutive_g_slap_misses: int = 0 # Track consecutive G-Slap misses
+var shop_icon_taps: int = 0 # Track taps on the shop icon
+var money_shot_candidate: bool = false # Track if the current G-slap attempt qualifies for the Money Shot achievement
+
+# Flag to track if player has looked at the Girth Bazaar
+var has_viewed_bazaar: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -72,13 +87,32 @@ func _ready():
 	refactory_timer.timeout.connect(_on_refactory_timer_timeout)
 	add_child(refactory_timer)
 	
+	# Setup achievement tracking timers
+	minute_tap_timer = Timer.new()
+	minute_tap_timer.wait_time = 60.0
+	minute_tap_timer.one_shot = true
+	minute_tap_timer.timeout.connect(_on_minute_tap_timer_timeout)
+	add_child(minute_tap_timer)
+	
+	no_tap_timer = Timer.new()
+	no_tap_timer.wait_time = 30.0 # 30 seconds for the "Is This Thing On?" achievement
+	no_tap_timer.one_shot = true
+	no_tap_timer.timeout.connect(_on_no_tap_timer_timeout)
+	add_child(no_tap_timer)
+	no_tap_timer.start() # Start this timer immediately to track initial game state
+	
+	blue_chode_timer = Timer.new()
+	blue_chode_timer.wait_time = blue_chode_time
+	blue_chode_timer.one_shot = true
+	blue_chode_timer.timeout.connect(_on_blue_chode_timer_timeout)
+	add_child(blue_chode_timer)
+	
 	# Track process for decay
 	set_process(true)
 	
 	# Connect to AchievementManager if it's ready
 	await get_tree().process_frame  # Wait for AchievementManager to be ready
-	if AchievementManager.get_instance():
-		AchievementManager.get_instance().achievement_unlocked.connect(_on_achievement_manager_achievement_unlocked)
+	AchievementManager.achievement_unlocked.connect(_on_achievement_manager_achievement_unlocked)
 
 
 func _process(delta):
@@ -111,6 +145,15 @@ func _process(delta):
 func increment_girth(girth_multiplier: int = 1, is_giga_slap: bool = false):
 	var girth_gain = GIRTH_PER_TAP * girth_multiplier
 	
+	# Track total taps and tap rate
+	total_taps += 1
+	_update_tap_rate()
+	_check_tap_count_achievements()
+	
+	# Reset no tap timer when player taps
+	no_tap_timer.stop()
+	no_tap_timer.start()
+	
 	# Reset refactory period on any tap - we're actively using it!
 	# If we were in refactory period and ended it through tapping, track that achievement
 	if is_in_refactory_period:
@@ -129,6 +172,7 @@ func increment_girth(girth_multiplier: int = 1, is_giga_slap: bool = false):
 		giga_slap_girth_earned += girth_gain
 		current_giga_slap_streak += 1
 		highest_giga_slap_streak = max(highest_giga_slap_streak, current_giga_slap_streak)
+		consecutive_g_slap_misses = 0 # Reset misses counter on success
 		
 		# Update time tracking for marathon achievement
 		var current_time = Time.get_ticks_msec()
@@ -150,6 +194,8 @@ func increment_girth(girth_multiplier: int = 1, is_giga_slap: bool = false):
 		# Reset GigaSlap streak if this was a missed G-spot attempt
 		if is_giga_slap_minigame_active:
 			current_giga_slap_streak = 0
+			consecutive_g_slap_misses += 1
+			_check_g_slap_miss_achievements()
 			giga_slap_miss_count += 1
 		
 		_check_mega_slap_achievements()
@@ -162,6 +208,10 @@ func increment_girth(girth_multiplier: int = 1, is_giga_slap: bool = false):
 
 	# Check milestone achievements based on girth
 	_check_girth_achievements()
+	
+	# If blue_chode_timer was running, stop it since player tapped
+	if blue_chode_timer.time_left > 0:
+		blue_chode_timer.stop()
 
 
 # Update the charge meter with each tap
@@ -173,6 +223,8 @@ func update_charge():
 		# Reset after a Mega Slap
 		current_charge = 0
 		is_mega_slap_primed = false
+		# Stop blue chode timer if it was running
+		blue_chode_timer.stop()
 	else:
 		# Increment charge and check if fully charged
 		# NOTE: We're still incrementing by charge_per_tap, but the constant decay
@@ -183,6 +235,8 @@ func update_charge():
 			is_mega_slap_primed = true
 			can_attempt_giga_slap = true # Player is now eligible for a Giga Slap attempt
 			emit_signal("mega_slap_ready")
+			# Start blue chode timer when meter is fully charged
+			blue_chode_timer.start()
 			# Don't immediately emit giga_slap_attempt_ready here.
 			# Let the TapperArea decide when to trigger it (e.g., on the *next* tap after ready)
 			print("⚡ MIGHTY MEGA SLAP READY! Potential Giga Slap... ⚡")
@@ -248,13 +302,19 @@ func _check_mega_slap_achievements():
 
 # Check for GigaSlap and G-spot achievements
 func _check_giga_slap_achievements():
-	# First GigaSlap
+	# First GigaSlap - using both the original and new achievement names
 	if total_giga_slaps == 1:
 		AchievementManager.unlock_achievement("first_giga_slap")
+		AchievementManager.unlock_achievement("g_spotter")
 	
-	# Total GigaSlaps milestones
+	# G-Guzzler (10 G-slaps)
 	if total_giga_slaps == 10:
 		AchievementManager.unlock_achievement("giga_slap_10")
+		AchievementManager.unlock_achievement("g_guzzler")
+	
+	# G-Spot Messiah (25 G-slaps)
+	if total_giga_slaps == 25:
+		AchievementManager.unlock_achievement("g_spot_messiah")
 	
 	if total_giga_slaps == 50:
 		AchievementManager.unlock_achievement("giga_slap_50")
@@ -262,12 +322,18 @@ func _check_giga_slap_achievements():
 	# Streak achievements
 	if current_giga_slap_streak == 3:
 		AchievementManager.unlock_achievement("giga_slap_streak_3")
+		AchievementManager.unlock_achievement("chain_reaction_climax")
 	
 	if current_giga_slap_streak == 5:
 		AchievementManager.unlock_achievement("giga_slap_streak_5")
 	
 	if current_giga_slap_streak == 10:
 		AchievementManager.unlock_achievement("giga_slap_streak_10")
+	
+	# Money Shot achievement - landing a G-slap as the very first tap after the meter fills
+	if money_shot_candidate:
+		AchievementManager.unlock_achievement("the_money_shot")
+		money_shot_candidate = false # Reset the flag
 	
 	# Girth earned from GigaSlaps
 	if giga_slap_girth_earned >= 500:
@@ -310,9 +376,11 @@ func _check_girth_achievements():
 	# Evolution achievements
 	if current_girth >= 300: # First evolution threshold
 		AchievementManager.unlock_achievement("first_evolution")
+		AchievementManager.unlock_achievement("veinous_curiosity")
 	
 	if current_girth >= 1500: # Ultimate evolution threshold
 		AchievementManager.unlock_achievement("ultimate_evolution")
+		AchievementManager.unlock_achievement("it_cracked")
 
 
 # Called when AchievementManager unlocks an achievement, forward to legacy system
@@ -327,6 +395,14 @@ func attempt_giga_slap_minigame():
 		print("Global: Triggering Giga Slap minigame attempt.")
 		can_attempt_giga_slap = false # Consume the immediate eligibility
 		is_giga_slap_minigame_active = true # Minigame is now active
+		
+		# Check if this is the first tap after meter filled
+		# For the Money Shot achievement
+		if is_mega_slap_primed and blue_chode_timer.time_left > 0 and blue_chode_timer.time_left >= (blue_chode_time - 0.5):
+			# This means they tapped within 0.5 seconds of the meter filling
+			# Flag this for when the G-spot is hit successfully
+			money_shot_candidate = true
+		
 		emit_signal("giga_slap_attempt_ready")
 		return true
 	return false
@@ -339,6 +415,7 @@ func giga_slap_timed_out():
 	can_attempt_giga_slap = false
 	is_giga_slap_minigame_active = false
 	current_giga_slap_streak = 0 # Reset streak on timeout
+	money_shot_candidate = false # Reset money shot candidate flag on timeout
 	emit_signal("charge_updated", current_charge, max_charge)
 	emit_signal("giga_slap_charge_lost")
 
@@ -367,3 +444,56 @@ func report_g_spot_precision(precision: float):
 
 # func get_girth() -> int:
 # return current_girth 
+
+# Timer callback functions for achievements
+func _on_minute_tap_timer_timeout():
+	# Check if player achieved 60 taps in 60 seconds
+	if taps_in_last_minute >= 60:
+		AchievementManager.unlock_achievement("minute_man")
+	taps_in_last_minute = 0
+
+func _on_no_tap_timer_timeout():
+	# Player hasn't tapped for 30 seconds from game start
+	if total_taps == 0:
+		AchievementManager.unlock_achievement("is_this_thing_on")
+
+func _on_blue_chode_timer_timeout():
+	# Player let the G-Slap meter fill but didn't tap for 10 seconds
+	AchievementManager.unlock_achievement("blue_choded")
+
+# Track tap rate for achievements
+func _update_tap_rate():
+	var current_time = Time.get_ticks_msec()
+	
+	# Add current tap to recent taps
+	recent_taps.append(current_time)
+	
+	# Remove taps older than 1 second
+	while not recent_taps.is_empty() and current_time - recent_taps[0] > 1000:
+		recent_taps.pop_front()
+	
+	# Update taps per second
+	taps_per_second = recent_taps.size()
+	
+	# Check for Jackhammer achievement
+	if taps_per_second >= 8:
+		AchievementManager.unlock_achievement("the_jackhammer")
+	
+	# Update minute counter
+	taps_in_last_minute += 1
+	if not minute_tap_timer.is_stopped() and minute_tap_timer.time_left <= 0:
+		minute_tap_timer.start()
+
+# Check for achievements based on consecutive G-spot misses
+func _check_g_slap_miss_achievements():
+	if consecutive_g_slap_misses >= 5:
+		AchievementManager.unlock_achievement("the_slap_heretic")
+
+# Check for achievements based on total tap count
+func _check_tap_count_achievements():
+	if total_taps == 69:
+		AchievementManager.unlock_achievement("nice")
+	elif total_taps == 420:
+		AchievementManager.unlock_achievement("blaze_it")
+	elif total_taps == 1000:
+		AchievementManager.unlock_achievement("repetitive_slap_injury")

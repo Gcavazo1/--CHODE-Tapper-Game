@@ -8,11 +8,10 @@ extends Node2D
 @onready var tapper_area = $TapperPanelContainer/TapperCenterNode2D/TapperArea
 
 # Signal declarations - relay signals from TapperArea
-signal floating_number_requested(value, position)
 signal achievement_unlocked(title, description, duration)
 
 var neon_pulse_time: float = 0.0
-var neon_pulse_speed: float = 0.6  # Seconds per complete pulse cycle
+var neon_pulse_speed: float = 0.45  # Seconds per complete pulse cycle
 var neon_min_energy: float = 0.75
 var neon_max_energy: float = 2.75
 
@@ -35,8 +34,6 @@ func _ready():
 
 	# Connect TapperArea signals if needed
 	if tapper_area:
-		if tapper_area.has_signal("floating_number_requested"):
-			tapper_area.connect("floating_number_requested", _on_tapper_area_floating_number_requested)
 		if tapper_area.has_signal("achievement_unlocked"):
 			tapper_area.connect("achievement_unlocked", _on_tapper_area_achievement_unlocked)
 	else:
@@ -63,9 +60,6 @@ func _process(delta):
 		neon_sign_left = get_node_or_null("TapperPanelContainer/NeonLightsContainer/NeonSignLeftSide")
 
 # Signal relay functions
-func _on_tapper_area_floating_number_requested(value, position):
-	emit_signal("floating_number_requested", value, position)
-
 func _on_tapper_area_achievement_unlocked(title, description, duration):
 	emit_signal("achievement_unlocked", title, description, duration)
 

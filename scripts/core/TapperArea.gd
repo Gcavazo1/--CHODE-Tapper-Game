@@ -14,6 +14,8 @@ extends Node2D
 # Signals for UI interactions
 signal floating_number_requested(value, position)
 signal achievement_unlocked(title, description, duration)
+# Signal for roach interactions - emits when player taps
+signal tapped(tap_position)
 
 # Preload sound effects
 const MEGA_SLAP_SFX = preload("res://assets/audio/sfx/megaSlap.wav")
@@ -38,6 +40,9 @@ const MILESTONE_THRESHOLDS = [50, 100, 150, 200, 250, 500, 750, 1000, 1250]
 var _reached_milestones = []
 
 func _ready():
+	# Add TapperArea to group so roaches can find it
+	add_to_group("tapper_areas")
+	
 	# Connect the button's pressed signal
 	# Removed the redundant connection:
 	# if click_button:
@@ -54,14 +59,6 @@ func _ready():
 	if click_button:
 		# For button scaling animations
 		click_button.pivot_offset = click_button.size / 2.0
-	
-	# Make the neon light reflection invisible except for shader effect
-	var light_reflection = $NeonLightReflectionLeft
-	if light_reflection:
-		# Make the ColorRect itself invisible but let shader do its work
-		light_reflection.color = Color(0, 0, 0, 0)
-		# Set blend mode to add light only (not supported through script in Godot 4)
-		# You'll need to set this in the editor: CanvasItemMaterial with Blend Mode = Add
 	
 	print("TapperArea ready.")
 
@@ -87,135 +84,89 @@ func _ready():
 
 # Called when the ChodeClickZone button is pressed
 func _on_pressed():
-	# If Giga Slap minigame is active, forward the tap to the SkillTapMeter.
+	# Emit the tapped signal with the global tap position for roaches
+	emit_signal("tapped", get_global_mouse_position())
+	
+	# If Giga Slap minigame is active, notify SkillTapUIManager to evaluate the tap.
 	if Global.is_giga_slap_minigame_active:
-		print("TapperArea: Giga Slap minigame active, attempting to forward tap.")
-		var main_layout = get_tree().get_first_node_in_group("MainLayout")
-		if main_layout and main_layout.has_method("get_skill_tap_meter_node"):
-			var skill_tap_meter_node = main_layout.get_skill_tap_meter_node()
-			
-			if skill_tap_meter_node == null:
-				print("TapperArea ERROR: skill_tap_meter_node is NULL after getting from MainLayout.")
-				return
-
-			if not is_instance_valid(skill_tap_meter_node):
-				print("TapperArea ERROR: skill_tap_meter_node is NOT VALID after getting from MainLayout.")
-				return
-			
-			print("TapperArea INFO: Target SkillTapMeter Path: ", skill_tap_meter_node.get_path())
-			print("TapperArea INFO: Target SkillTapMeter IsVisible: ", skill_tap_meter_node.visible)
-			print("TapperArea INFO: Target SkillTapMeter Script IsActive: ", skill_tap_meter_node.is_active)
-			print("TapperArea INFO: Target SkillTapMeter Script: ", skill_tap_meter_node.get_script())
-
-			if skill_tap_meter_node.has_method("handle_skill_tap"):
-				print("TapperArea: --- About to call handle_skill_tap --- ")
-				skill_tap_meter_node.handle_skill_tap()
-				print("TapperArea: --- Call to handle_skill_tap completed --- ")
+		print("TapperArea: Giga Slap minigame active, evaluating tap via SkillTapUIManager.")
+		var skill_tap_managers = get_tree().get_nodes_in_group("SkillTapUIManagerGroup")
+		if not skill_tap_managers.is_empty():
+			var skill_tap_manager = skill_tap_managers[0] # Get the first one
+			if is_instance_valid(skill_tap_manager) and skill_tap_manager.has_method("evaluate_player_tap"):
+				skill_tap_manager.evaluate_player_tap()
 			else:
-				push_error("TapperArea: ERROR - SkillTapMeter node does NOT have handle_skill_tap method.")
+				push_error("TapperArea: SkillTapUIManager found but is invalid or missing evaluate_player_tap() method.")
 		else:
-			push_error("TapperArea: ERROR - Could not find MainLayout or its get_skill_tap_meter_node method.")
-		return
+			push_error("TapperArea: Could not find SkillTapUIManager node in group 'SkillTapUIManagerGroup'.")
+		return # IMPORTANT: If minigame is active, this tap is for the minigame. Do not proceed to normal tap logic.
 
 	print("TapperArea pressed! Let the Girth flow!")
 	
 	var perform_giga_slap_minigame = false
 	var girth_multiplier = 1 # Default to normal tap
-	var is_actual_giga_slap = false
+	var _is_actual_giga_slap = false
 
 	# Check if Mega Slap is primed (charge meter full)
 	if Global.is_mega_slap_primed:
 		# Check if we can attempt the Giga Slap minigame
 		if Global.can_attempt_giga_slap: # This flag is set true by Global when charge meter fills
-			# Attempt to start the Giga Slap minigame
-			# Global.attempt_giga_slap_minigame() will emit giga_slap_attempt_ready if successful
-			# MainLayout will catch this and show the SkillTapMeter.
-			# We don't increment girth here; that happens after minigame result.
 			if Global.attempt_giga_slap_minigame():
 				perform_giga_slap_minigame = true
 				print("TapperArea: Giga Slap Minigame initiated.")
-				# DO NOT increment girth or update charge here. Minigame handles outcome.
-				# Only play tap effects if minigame doesn't start (shouldn't happen if attempt_giga_slap returns true)
-			else: # Should not happen if can_attempt_giga_slap was true, but as a fallback:
+			else: 
 				girth_multiplier = Global.MEGA_SLAP_MULTIPLIER
 				Global.increment_girth(girth_multiplier)
-				Global.update_charge() # Resets charge
-		else: # Mega Slap is primed, but Giga Slap already attempted or not eligible, so normal Mega Slap
+				Global.update_charge() 
+		else: 
 			girth_multiplier = Global.MEGA_SLAP_MULTIPLIER
 			Global.increment_girth(girth_multiplier)
-			Global.update_charge() # Resets charge
+			Global.update_charge() 
 	else:
-		# Normal tap if Mega Slap is not primed
-		Global.increment_girth(girth_multiplier) # Standard tap (multiplier is 1)
-		Global.update_charge() # Increments charge
+		Global.increment_girth(girth_multiplier) 
+		Global.update_charge() 
 
-	# Visual/Audio Feedback only if NOT starting Giga Slap minigame
 	if not perform_giga_slap_minigame:
-		# Trigger particle burst 
-		if tap_particles: # This line and the rest of the feedback block are now correctly indented
-			# For any tap that's not starting the Giga Slap minigame, restart particles.
-			# We can add specific visual changes for Mega Slaps vs. normal taps later if needed.
-			
-			# Example: You might want to change particle amount or lifetime
-			# if girth_multiplier > 1: // It's a Mega Slap (but not Giga)
-			#    tap_particles.amount = 50 // Or some other enhanced value
-			# else: // Normal tap
-			#    tap_particles.amount = 20 // Default amount
-			#
-			tap_particles.restart() # This is the key line!
+		if tap_particles: 
+			tap_particles.restart()
 
 		if animation_player:
-			# Play appropriate animation
-			if girth_multiplier > 1: # Mega Slap (not Giga)
-				# For Mega Slap, use a more dramatic animation if available
-				# If not, just use a more exaggerated version of squash_stretch
+			if girth_multiplier > 1: 
 				if animation_player.has_animation("mega_slap"):
 					animation_player.play("mega_slap")
 				else:
-					# Create an exaggerated version of squash_stretch
-					animated_sprite.scale = Vector2(0.7, 0.3)  # More extreme squash
+					animated_sprite.scale = Vector2(0.7, 0.3)
 					var tween = create_tween()
-					tween.tween_property(animated_sprite, "scale", Vector2(0.4, 0.8), 0.2)  # More extreme stretch
-					tween.tween_property(animated_sprite, "scale", Vector2(0.55, 0.5), 0.2)  # Back to normal
+					tween.tween_property(animated_sprite, "scale", Vector2(0.4, 0.8), 0.2)
+					tween.tween_property(animated_sprite, "scale", Vector2(0.55, 0.5), 0.2)
 			else:
-				# Normal tap animation
 				animation_player.play("squash_stretch")
 
-		# Screen shake on normal/mega taps removed as per request for milestone/evolution shakes only
-		# If you want shakes on every tap, this is where you would add:
-		# emit_signal("girthquake_requested", TAP_SHAKE_AMPLITUDE, TAP_SHAKE_DURATION)
-
-		# Play tap sound effect - use different sound for Mega Slap
-		if girth_multiplier > 1 and mega_slap_sfx_player: # Mega Slap (not Giga)
-			# Use dedicated Mega Slap sound
+		if girth_multiplier > 1 and mega_slap_sfx_player: 
 			mega_slap_sfx_player.play()
 		elif tap_sfx_player:
-			# Use normal tap sound (with optional pitch/volume adjustments)
-			if girth_multiplier > 1: # Mega Slap (not Giga)
-				tap_sfx_player.pitch_scale = 0.7  # Lower, more powerful sound for Mega Slap
-				tap_sfx_player.volume_db = 3.0  # Louder
+			if girth_multiplier > 1: 
+				tap_sfx_player.pitch_scale = 0.7
+				tap_sfx_player.volume_db = 3.0
 			else:
-				tap_sfx_player.pitch_scale = 1.0  # Normal pitch
-				tap_sfx_player.volume_db = 0.0  # Normal volume
+				tap_sfx_player.pitch_scale = 1.0
+				tap_sfx_player.volume_db = 0.0
 			
 			tap_sfx_player.play()
 			
-			# Reset sound properties after Mega Slap
-			if girth_multiplier > 1: # Mega Slap (not Giga)
+			if girth_multiplier > 1: 
 				await tap_sfx_player.finished
 				tap_sfx_player.pitch_scale = 1.0
 				tap_sfx_player.volume_db = 0.0
 			
-		# Emit signals for floating numbers instead of spawning them directly
-		if girth_multiplier == Global.MEGA_SLAP_MULTIPLIER: # Normal Mega Slap
+		if girth_multiplier == Global.MEGA_SLAP_MULTIPLIER: 
 			emit_signal("floating_number_requested", "+" + str(Global.GIRTH_PER_TAP * Global.MEGA_SLAP_MULTIPLIER), global_position)
 			await get_tree().create_timer(0.1).timeout
 			emit_signal("floating_number_requested", "MEGA SLAP!", global_position - Vector2(0, 30))
 			await get_tree().create_timer(0.1).timeout
 			emit_signal("floating_number_requested", "THUNDEROUS!", global_position - Vector2(0, 60))
-		elif girth_multiplier == 1: # Normal Tap
+		elif girth_multiplier == 1: 
 			emit_signal("floating_number_requested", "+1", global_position)
-		# Giga Slap success/failure floating text will be handled by MainLayout or SkillTapMeter itself
 
 
 func _on_girth_updated(new_girth: int):
@@ -233,7 +184,7 @@ func _on_girth_updated(new_girth: int):
 
 
 # Celebrate reaching a milestone on the path to evolution
-func _celebrate_milestone(milestone: int, current_girth: int):
+func _celebrate_milestone(milestone: int, _current_girth: int):
 	# Calculate progress percentage towards next evolution
 	var target_threshold = VEINOUS_VERIDIAN_THRESHOLD
 	var current_tier = 0

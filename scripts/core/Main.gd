@@ -43,11 +43,12 @@ func _ready():
 	print("Main.gd ready. Screen shake system initialized.")
 	
 	main_layout = $MainLayoutInstance
+
 	if main_layout:
 		print("MainLayout found, setting up connections...")
 		
 		if Global:
-			main_layout.update_girth_counter(Global.current_girth)
+			# main_layout.update_girth_counter(Global.current_girth) # GameStatsUIManager handles initial display via Global
 			Global.girth_updated.connect(_on_girth_updated)
 			Global.achievement_unlocked.connect(_on_achievement_unlocked)
 	else:
@@ -57,12 +58,20 @@ func _ready():
 	_show_initial_hint()
 
 func _on_girth_updated(new_girth):
-	if main_layout:
-		main_layout.update_girth_counter(new_girth)
+	# This function is still connected to Global.girth_updated.
+	# UI updates are handled by GameStatsUIManager.
+	# Add any Main.gd specific logic here if needed, e.g., logging.
+	print("Main.gd: Global.girth_updated received: %s" % new_girth)
+	# if main_layout: # This call is no longer valid/needed
+		# main_layout.update_girth_counter(new_girth)
 
-func _on_achievement_unlocked(achievement_name, achievement_description, duration = 3.0):
-	if main_layout:
-		main_layout.show_achievement(achievement_name, achievement_description, duration)
+func _on_achievement_unlocked(achievement_name, _achievement_description, _duration = 3.0):
+	# MainLayout (main_layout) no longer has show_achievement directly.
+	# AchievementUIManager listens to Global.achievement_unlocked and TapperArea.achievement_unlocked
+	# and handles the popup display itself.
+	print("Main.gd: Global.achievement_unlocked received: Title - '%s'" % achievement_name)
+	# if main_layout: # This call is no longer valid/needed
+		# main_layout.show_achievement(achievement_name, achievement_description, duration)
 
 func _show_initial_hint():
 	if Global:
@@ -93,7 +102,7 @@ func execute_screen_shake(amplitude: float = DEFAULT_SHAKE_AMPLITUDE, duration: 
 func _on_shake_timer_timeout():
 	var tween = create_tween()
 	tween.tween_property(self, "_current_shake_amplitude", 0.0, 0.1)
-	tween.tween_callback(func(): global_position = _original_position)
+	tween.tween_callback(func(): global_position = _original_position) 
 
 # Note: The girthquake signal connection has been removed to simplify the code
 # Screen shake can still be triggered manually by calling execute_screen_shake() if needed 

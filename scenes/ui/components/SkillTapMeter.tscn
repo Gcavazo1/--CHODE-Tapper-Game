@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvq1vj2cmxngu"]
+[gd_scene load_steps=6 format=3 uid="uid://cvq1vj2cmxngu"]
 
 [ext_resource type="Script" uid="uid://conykg5jke6tb" path="res://scripts/ui/components/SkillTapMeter.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://b87fjwx31kgm0" path="res://assets/fonts/GlitchGoblin.ttf" id="2_ccaux"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skill_bg"]
 bg_color = Color(0.101961, 0.101961, 0.137255, 0.796078)
@@ -26,7 +27,7 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 shadow_color = Color(0, 1, 1, 0.6)
-shadow_size = 5
+shadow_size = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_slider"]
 bg_color = Color(1, 0, 0.8, 1)
@@ -41,6 +42,8 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 expand_margin_left = 1.0
 expand_margin_right = 1.0
+shadow_color = Color(1, 0, 1, 0.6)
+shadow_size = 6
 
 [node name="SkillTapMeter" type="Control"]
 custom_minimum_size = Vector2(250, 30)
@@ -98,5 +101,24 @@ flat = true
 wait_time = 0.016
 
 [node name="TimeoutTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
+
+[node name="GspotLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 30.0
+offset_right = 250.0
+offset_bottom = 89.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 3
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("2_ccaux")
+theme_override_font_sizes/font_size = 39
+text = "G-SPOT "
+horizontal_alignment = 1
+vertical_alignment = 1

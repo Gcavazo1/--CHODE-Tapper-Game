@@ -1,0 +1,125 @@
+[gd_scene load_steps=19 format=3 uid="uid://cpjggrg8y0u5h"]
+
+[ext_resource type="Shader" uid="uid://dgdvl665cyybt" path="res://assets/shaders/rounded_texture_rect.gdshader" id="1_n5din"]
+[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="1_wehm1"]
+[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="1_y563b"]
+[ext_resource type="Texture2D" uid="uid://bj1rvkrmjry62" path="res://assets/art/vfx/neon_light_circle.png" id="2_lig7u"]
+[ext_resource type="Script" uid="uid://dnwo3dxae0sa" path="res://scripts/core/TapperCenter.gd" id="2_tappercenter_script"]
+[ext_resource type="Texture2D" uid="uid://cjnlhym25khpe" path="res://assets/art/vfx/neon_light_circle2.png" id="4_2r7vr"]
+[ext_resource type="Shader" uid="uid://cx8te4a8bj3c3" path="res://assets/shaders/edge_light_sprite.gdshader" id="6_nujcl"]
+[ext_resource type="Script" uid="uid://cqf2w5ulfatrq" path="res://scripts/entities/RatSpawner.gd" id="7_2r7vr"]
+[ext_resource type="Texture2D" uid="uid://di1e6qp1thh6b" path="res://assets/art/vfx/bitcoin_sign_3d.png" id="7_nujcl"]
+[ext_resource type="PackedScene" uid="uid://cuyvtm2dmn6mk" path="res://scenes/entities/Rat.tscn" id="8_4x851"]
+[ext_resource type="Script" uid="uid://bk8ycf8fr0wua" path="res://scripts/visuals/ShaderPulseEffect.gd" id="8_vgntt"]
+[ext_resource type="Shader" uid="uid://hnjynjdvt14p" path="res://assets/shaders/retro_tunnel_effect.gdshader" id="9_eunnu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t045l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4x851"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5din"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eunnu"]
+shader = ExtResource("6_nujcl")
+shader_parameter/light_color = Color(1, 0, 0.6, 0.662745)
+shader_parameter/light_pos_uv = Vector2(0.1, 0.3)
+shader_parameter/light_radius = 0.904
+shader_parameter/light_intensity = 0.15
+shader_parameter/edge_smoothness = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76cg7"]
+shader = ExtResource("9_eunnu")
+shader_parameter/iResolution = Vector2(1200, 550)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2r7vr"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 36.0
+
+[node name="TapperCenter" type="Node2D"]
+script = ExtResource("2_tappercenter_script")
+
+[node name="TapperPanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 676.0
+offset_bottom = 453.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t045l")
+
+[node name="NeonLightsContainer" type="Node2D" parent="TapperPanelContainer"]
+
+[node name="NeonSignRightSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+material = SubResource("ShaderMaterial_4x851")
+position = Vector2(548, 98.5)
+scale = Vector2(0.491551, 0.547831)
+color = Color(0.898039, 0, 1, 0.541176)
+shadow_color = Color(0.746644, 0.00131156, 0.568267, 1)
+texture = ExtResource("2_lig7u")
+texture_scale = 1.55
+height = 146.0
+
+[node name="NeonSignLeftSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+position = Vector2(100.5, 105)
+scale = Vector2(1.05623, 1.14317)
+color = Color(0.898039, 0, 1, 0.94902)
+energy = 0.35
+texture = ExtResource("4_2r7vr")
+texture_scale = 1.1
+height = 200.0
+
+[node name="TapperBG" type="TextureRect" parent="TapperPanelContainer"]
+material = SubResource("ShaderMaterial_n5din")
+layout_mode = 2
+texture = ExtResource("1_wehm1")
+expand_mode = 3
+
+[node name="BitcoinBGSign" type="TextureRect" parent="TapperPanelContainer/TapperBG"]
+material = SubResource("ShaderMaterial_eunnu")
+layout_mode = 0
+offset_left = 186.0
+offset_top = 141.0
+offset_right = 1621.0
+offset_bottom = 2460.0
+rotation = 0.0523599
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("7_nujcl")
+
+[node name="SimulatedLightBGSign" type="Node" parent="TapperPanelContainer/TapperBG/BitcoinBGSign" node_paths=PackedStringArray("target_node")]
+script = ExtResource("8_vgntt")
+target_node = NodePath("..")
+min_value = 0.25
+max_value = 0.5
+
+[node name="ShaderBG" type="Polygon2D" parent="TapperPanelContainer/TapperBG"]
+material = SubResource("ShaderMaterial_76cg7")
+position = Vector2(389.979, 1.11664)
+polygon = PackedVector2Array(0.0206604, 28.8834, -4.97934, 30.8834, -3.97934, 46.8834, -18.9793, 46.8834, -24.9793, 55.8834, -19.9793, 66.8834, -12.9793, 70.8834, -13.9793, 87.8834, -13.9793, 108.883, -8.97934, 113.883, -3.97934, 112.883, -1.97934, 133.883, -6.97934, 134.883, -9.97934, 139.883, -7.97934, 144.883, -3.97934, 144.883, -2.97934, 158.883, 1.02066, 160.883, 1.02066, 171.883, -15.9793, 182.883, -12.9793, 187.883, -0.97934, 179.883, -0.97934, 208.883, -5.97934, 207.883, -5.97934, 190.883, -10.9793, 190.883, -10.9793, 200.883, -21.9793, 200.883, -21.9793, 167.883, -29.9793, 167.883, -29.9793, 144.883, -41.9793, 144.883, -41.9793, 168.883, -46.9793, 168.883, -46.9793, 173.883, -52.9793, 173.883, -53.9793, 150.883, -63.9793, 150.883, -63.9793, 129.883, -78.9793, 129.883, -78.9793, 148.883, -83.9793, 148.883, -83.9793, 100.883, -79.9793, 100.883, -77.9793, 93.8834, -74.9793, 93.8834, -74.9793, 73.8834, -83.9793, 72.8834, -83.9793, 24.8834, -98.9793, 9.88336, -98.9793, 28.8834, -103.979, 28.8834, -103.979, 3.88336, -115.979, -0.116636, -0.97934, -0.116636, 1.02066, 0.883364)
+
+[node name="RatSpawner" type="Control" parent="TapperPanelContainer"]
+visible = false
+material = SubResource("ShaderMaterial_2r7vr")
+clip_contents = true
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("7_2r7vr")
+rat_scene = ExtResource("8_4x851")
+min_spawn_interval = 6.0
+max_spawn_interval = 20.0
+min_rat_speed = 70.0
+max_rat_speed = 150.0
+y_position_offset = -53.0
+
+[node name="Timer" type="Timer" parent="TapperPanelContainer/RatSpawner"]
+
+[node name="TapperCenterNode2D" type="Node2D" parent="TapperPanelContainer"]
+
+[node name="TapperArea" parent="TapperPanelContainer/TapperCenterNode2D" instance=ExtResource("1_y563b")]
+position = Vector2(310, 247)
+scale = Vector2(0.67, 0.581)

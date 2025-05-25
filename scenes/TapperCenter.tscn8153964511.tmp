@@ -1,0 +1,172 @@
+[gd_scene load_steps=24 format=3 uid="uid://cpjggrg8y0u5h"]
+
+[ext_resource type="Shader" uid="uid://dgdvl665cyybt" path="res://assets/shaders/rounded_texture_rect.gdshader" id="1_n5din"]
+[ext_resource type="Texture2D" uid="uid://3gw1ab0qxyl" path="res://assets/art/backgrounds/dystopian_alley_bg.png" id="1_wehm1"]
+[ext_resource type="PackedScene" uid="uid://b7ws2nwcq7l2a" path="res://scenes/TapperArea.tscn" id="1_y563b"]
+[ext_resource type="Texture2D" uid="uid://bj1rvkrmjry62" path="res://assets/art/vfx/neon_light_circle.png" id="2_lig7u"]
+[ext_resource type="Script" uid="uid://dnwo3dxae0sa" path="res://scripts/core/TapperCenter.gd" id="2_tappercenter_script"]
+[ext_resource type="Texture2D" uid="uid://cjnlhym25khpe" path="res://assets/art/vfx/neon_light_circle2.png" id="4_2r7vr"]
+[ext_resource type="Shader" uid="uid://cx8te4a8bj3c3" path="res://assets/shaders/edge_light_sprite.gdshader" id="6_nujcl"]
+[ext_resource type="Script" uid="uid://cqf2w5ulfatrq" path="res://scripts/entities/RatSpawner.gd" id="7_2r7vr"]
+[ext_resource type="Texture2D" uid="uid://di1e6qp1thh6b" path="res://assets/art/vfx/bitcoin_sign_3d.png" id="7_nujcl"]
+[ext_resource type="PackedScene" uid="uid://cuyvtm2dmn6mk" path="res://scenes/entities/Rat.tscn" id="8_4x851"]
+[ext_resource type="Script" uid="uid://bk8ycf8fr0wua" path="res://scripts/visuals/ShaderPulseEffect.gd" id="8_vgntt"]
+[ext_resource type="Shader" uid="uid://hnjynjdvt14p" path="res://assets/shaders/retro_tunnel_effect.gdshader" id="9_eunnu"]
+[ext_resource type="PackedScene" uid="uid://c6x0j6qwv0p7x" path="res://scenes/entities/Roach.tscn" id="13_fy5hl"]
+[ext_resource type="Script" uid="uid://base6l0ti6vfm" path="res://scripts/entities/RoachSpawner.gd" id="14_pifg3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t045l"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4x851"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 20.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n5din"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eunnu"]
+shader = ExtResource("6_nujcl")
+shader_parameter/light_color = Color(1, 0, 0.6, 0.662745)
+shader_parameter/light_pos_uv = Vector2(0.1, 0.3)
+shader_parameter/light_radius = 0.904
+shader_parameter/light_intensity = 0.15
+shader_parameter/edge_smoothness = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_76cg7"]
+shader = ExtResource("9_eunnu")
+shader_parameter/iResolution = Vector2(1200, 380)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2r7vr"]
+shader = ExtResource("1_n5din")
+shader_parameter/corner_radius = 36.0
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_eunnu"]
+vertices = PackedVector2Array(596.508, 353, 597.391, 371.633, 574.031, 366.867, 621.461, 318.602, 654.438, 353, 694, 186, 694, 419.789, 670.5, 415.094, 653.109, 383.617, 602.352, 186, 617.461, 306.922, 596.359, 189, 525.602, 294.453, 569.359, 189, 416, 169.469, 568.383, 162.453, 468.008, 349, 400, 247.93, 399, 181, 400, 349, 399, 66, 416, 66)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(0, 2, 3), PackedInt32Array(4, 0, 3), PackedInt32Array(5, 6, 7, 8, 4), PackedInt32Array(9, 5, 4, 3, 10, 11), PackedInt32Array(11, 10, 12, 13), PackedInt32Array(14, 15, 13, 12, 16, 17, 18), PackedInt32Array(16, 19, 17), PackedInt32Array(14, 18, 20, 21)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(704, 432, 664, 424, 643, 386, 644, 363, 607, 363, 608, 384, 554, 373, 610, 316, 529, 305, 472, 359, 390, 359, 390, 248, 389, 181, 389, 56, 426, 56, 426, 159, 578, 152, 579, 179, 594, 179, 600, 176, 704, 176)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_76cg7"]
+vertices = PackedVector2Array(628.203, 46.1484, 442, 61.1484, 442, -14, 694, -14, 694, 158, 626.18, 158)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(0, 3, 4, 5)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(704, -24, 432, -24, 432, 72, 618, 57, 616, 168, 664, 168, 704, 168)])
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_83i1o"]
+vertices = PackedVector2Array(160.688, 72.5313, 159.633, 96.5938, 21, 42.3516, 39.1719, 21.7266, 156, 179.617, 156, 203.852, 64.7813, 193.922, 21, 142.633, 15.8828, 201.438, 16.8516, 271.594, -14, 270.383, -14, -14, 38.25, -14)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 5, 6, 7), PackedInt32Array(7, 6, 8), PackedInt32Array(8, 9, 10, 11), PackedInt32Array(7, 8, 11, 2), PackedInt32Array(2, 11, 12, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-24, -24, 48, -24, 49, 15, 171, 66, 169, 111, 31, 57, 31, 135, 166, 172, 166, 215, 65, 204, 26, 210, 27, 282, -24, 280)])
+
+[node name="TapperCenter" type="Node2D"]
+script = ExtResource("2_tappercenter_script")
+
+[node name="TapperPanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 676.0
+offset_bottom = 453.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_t045l")
+
+[node name="NeonLightsContainer" type="Node2D" parent="TapperPanelContainer"]
+
+[node name="NeonSignRightSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+material = SubResource("ShaderMaterial_4x851")
+position = Vector2(548, 98.5)
+scale = Vector2(0.491551, 0.547831)
+color = Color(0.898039, 0, 1, 0.607843)
+shadow_color = Color(0.746644, 0.00131156, 0.568267, 1)
+texture = ExtResource("2_lig7u")
+texture_scale = 1.55
+height = 146.0
+
+[node name="NeonSignLeftSide" type="PointLight2D" parent="TapperPanelContainer/NeonLightsContainer"]
+position = Vector2(100.5, 105)
+scale = Vector2(1.05623, 1.14317)
+color = Color(0.898039, 0, 1, 0.94902)
+energy = 0.45
+texture = ExtResource("4_2r7vr")
+texture_scale = 1.1
+height = 200.0
+
+[node name="TapperBG" type="TextureRect" parent="TapperPanelContainer"]
+material = SubResource("ShaderMaterial_n5din")
+layout_mode = 2
+texture = ExtResource("1_wehm1")
+expand_mode = 3
+
+[node name="BitcoinBGSign" type="TextureRect" parent="TapperPanelContainer/TapperBG"]
+material = SubResource("ShaderMaterial_eunnu")
+layout_mode = 0
+offset_left = 184.0
+offset_top = 152.0
+offset_right = 1659.0
+offset_bottom = 2973.0
+rotation = 0.0349066
+scale = Vector2(0.03, 0.03)
+texture = ExtResource("7_nujcl")
+
+[node name="SimulatedLightBGSign" type="Node" parent="TapperPanelContainer/TapperBG/BitcoinBGSign" node_paths=PackedStringArray("target_node")]
+script = ExtResource("8_vgntt")
+target_node = NodePath("..")
+min_value = 0.25
+max_value = 0.5
+
+[node name="ShaderBG" type="Polygon2D" parent="TapperPanelContainer/TapperBG"]
+material = SubResource("ShaderMaterial_76cg7")
+position = Vector2(389.979, 1.11664)
+polygon = PackedVector2Array(1.021, 28.8834, -1.979, 28.8834, -1.979, 45.8834, -3.979, 45.8834, -3.97934, 46.8834, -16.979, 46.8834, -16.979, 49.8834, -22.979, 49.8834, -22.979, 55.8834, -24.9793, 55.8834, -22.979, 59.8834, -19.979, 59.8834, -19.979, 65.8834, -16.979, 65.8834, -16.979, 68.8834, -9.979, 68.8834, -8.979, 70.8834, -6.979, 70.8834, -6.979, 68.8834, 1.021, 68.8834, 1.021, 74.8834, -12.979, 74.8834, -13.979, 87.8834, -11.2218, 87.5768, -10.979, 89.8834, -13.979, 89.8834, -13.9793, 108.883, -10.979, 108.883, -9.979, 110.883, -6.979, 110.883, -5.979, 112.883, -2.979, 112.883, -1.97934, 133.883, -6.97934, 134.883, -9.97934, 139.883, -7.979, 142.883, -5.979, 142.883, -4.979, 144.883, -1.979, 145.883, -2.97934, 158.883, 1.02066, 160.883, 1.02066, 171.883, -14.979, 182.883, -11.979, 186.883, -0.979004, 178.883, -0.97934, 208.883, -5.979, 208.883, -5.97934, 190.883, -10.9793, 190.883, -10.9793, 200.883, -21.9793, 200.883, -21.9793, 167.883, -29.9793, 167.883, -29.979, 146.883, -31.979, 146.883, -31.979, 134.883, -32.979, 134.883, -32.979, 146.883, -39.979, 146.883, -39.979, 136.883, -40.979, 136.883, -40.979, 147.883, -41.979, 147.883, -41.9793, 168.883, -43.979, 168.883, -43.979, 171.883, -46.979, 171.883, -46.9793, 173.883, -52.9793, 173.883, -52.979, 150.883, -54.979, 150.883, -55.979, 152.883, -56.979, 152.883, -56.979, 142.883, -57.979, 142.883, -57.979, 150.883, -63.9793, 150.883, -63.9793, 129.883, -71.979, 129.883, -71.979, 117.883, -72.979, 117.883, -72.979, 129.883, -78.9793, 129.883, -78.9793, 148.883, -83.9793, 148.883, -83.9793, 100.883, -78.979, 100.883, -78.979, 72.8834, -83.9793, 72.8834, -83.979, 24.8834, -98.979, 16.8834, -98.9793, 28.8834, -103.979, 28.8834, -102.979, 0.88336, -128.979, 0.88336, -128.979, 13.8834, -128.979, 92.8834, -131.979, 95.8834, -131.979, 13.8834, -134.979, 13.8834, -135.979, 5.88336, -143.979, 4.88336, -144.979, 1.88336, -160.979, -1.11664, 1.021, -1.11664)
+
+[node name="RatSpawner" type="Control" parent="TapperPanelContainer"]
+z_index = 1
+material = SubResource("ShaderMaterial_2r7vr")
+clip_contents = true
+layout_mode = 2
+mouse_filter = 1
+script = ExtResource("7_2r7vr")
+rat_scene = ExtResource("8_4x851")
+min_spawn_interval = 8.0
+max_spawn_interval = 25.0
+min_rat_speed = 70.0
+max_rat_speed = 150.0
+y_position_offset = -53.0
+
+[node name="Timer" type="Timer" parent="TapperPanelContainer/RatSpawner"]
+
+[node name="RoachNavRegionBottomRight" type="NavigationRegion2D" parent="TapperPanelContainer"]
+navigation_polygon = SubResource("NavigationPolygon_eunnu")
+
+[node name="RoachNavRegionTopRight" type="NavigationRegion2D" parent="TapperPanelContainer"]
+navigation_polygon = SubResource("NavigationPolygon_76cg7")
+
+[node name="RoachNavRegionLeft" type="NavigationRegion2D" parent="TapperPanelContainer"]
+navigation_polygon = SubResource("NavigationPolygon_83i1o")
+
+[node name="RoachDespawnOcclusionZone" type="Area2D" parent="TapperPanelContainer"]
+
+[node name="SafeDespawnZone" type="CollisionPolygon2D" parent="TapperPanelContainer/RoachDespawnOcclusionZone"]
+position = Vector2(465.357, 346.654)
+polygon = PackedVector2Array(-65.357, 2.34601, -65.357, -130.654, -22.357, 2.34601)
+
+[node name="RoachSpawner" type="Control" parent="TapperPanelContainer" node_paths=PackedStringArray("occlusion_despawn_zone")]
+clip_contents = true
+layout_mode = 2
+script = ExtResource("14_pifg3")
+roach_scene = ExtResource("13_fy5hl")
+occlusion_despawn_zone = NodePath("../RoachDespawnOcclusionZone")
+max_spawn_interval = 25.0
+max_roaches = 8
+edge_spawn_margin = 40.0
+
+[node name="Timer" type="Timer" parent="TapperPanelContainer/RoachSpawner"]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[node name="TapperCenterNode2D" type="Node2D" parent="TapperPanelContainer"]
+
+[node name="TapperArea" parent="TapperPanelContainer/TapperCenterNode2D" instance=ExtResource("1_y563b")]
+position = Vector2(312, 264)
+scale = Vector2(0.615, 0.534)

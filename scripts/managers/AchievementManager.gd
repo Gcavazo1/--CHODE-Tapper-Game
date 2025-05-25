@@ -54,6 +54,31 @@ func _ready():
 	_register_achievement("giga_slap_clutch", "Clutch Performer", "Hit the G-spot while at less than 5% refactory decay!")
 	_register_achievement("giga_slap_marathon", "Marathon Slapper", "Perform 5 GigaSlaps within 30 seconds!")
 	
+	# New Achievements: The G-Slap Gospels
+	_register_achievement("g_spotter", "G-Spotter", "You found it. The first one's always special. Welcome to the path of enlightenment.")
+	_register_achievement("g_guzzler", "The G-Guzzler", "You're getting a taste for it now, aren't you? Keep that energy up.")
+	_register_achievement("g_spot_messiah", "G-Spot Messiah", "They said it couldn't be done. They were wrong. You are the chosen one, the master of the explosive release.")
+	_register_achievement("the_money_shot", "The Money Shot", "Perfect timing. No hesitation. Pure, unadulterated climax. A true artist at work.")
+	_register_achievement("chain_reaction_climax", "Chain Reaction Climax", "One... two... THREE! You're a machine! A relentless engine of Girthy satisfaction!")
+	
+	# New Achievements: The Tapping Testaments
+	_register_achievement("repetitive_slap_injury", "Repetitive Slap Injury", "Your finger may fall off, but your $GIRTH will be eternal. A worthy sacrifice.")
+	_register_achievement("nice", "Nice.", "Nice.")
+	_register_achievement("blaze_it", "Blaze It", "You've reached a higher state of consciousness. Or at least a higher state of tapping.")
+	_register_achievement("minute_man", "The Minute Man", "Fast and furious. You get the job done, no time wasted. Respect.")
+	_register_achievement("the_jackhammer", "The Jackhammer", "Is that you tapping or are you trying to break the sound barrier with your finger? Absolute machine!")
+	
+	# New Achievements: The Chronicles of Chode (some already covered by existing achievements)
+	_register_achievement("veinous_curiosity", "Veinous Curiosity", "It awakens! The first sign of true power pulses through its very core. The journey has begun.")
+	_register_achievement("it_cracked", "It Cracked!", "The power can no longer be contained! You've unleashed the radiant heart of The Chode! You absolute legend!")
+	_register_achievement("window_shopper", "Window Shopper", "Just looking, huh? Don't worry, the path to true Girth requires aspiration... and a whole lot of tapping.")
+	
+	# New Achievements: Degen Heresy & Absurd Acts
+	_register_achievement("blue_choded", "Blue Choded", "All that build-up... all that potential... for nothing. A moment of silence for this tragic waste of Girth.")
+	_register_achievement("the_slap_heretic", "The Slap Heretic", "You mock the Girth Gods with your inaction! You blaspheme the sacred Slap! Repent, sinner, repent!")
+	_register_achievement("is_this_thing_on", "Is This Thing On?", "Hello? McFly? The $CHODE isn't gonna slap itself... or is it? (No, it's not. Get to work.)")
+	_register_achievement("let_me_in", "LET ME IN!", "We admire your enthusiasm, but the Bazaar's doors remain sealed... for now. Patience, young Girth-hopper.")
+	
 	# Load any previously unlocked achievements
 	_load_achievements()
 

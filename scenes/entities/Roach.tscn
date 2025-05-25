@@ -1,13 +1,26 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6x0j6qwv0p7x"]
 
-[ext_resource type="Texture2D" uid="uid://dgwmafgtmfigx" path="res://assets/art/sprites/roaches.png" id="1_abcde"]
-[ext_resource type="Script" path="res://scripts/entities/Roach.gd" id="2_fghij"]
+[ext_resource type="Texture2D" uid="uid://bl8eojijenm7t" path="res://assets/art/sprites/roaches.png" id="1_abcde"]
+[ext_resource type="Script" uid="uid://bs4t5sq5j6wyh" path="res://scripts/entities/Roach.gd" id="2_fghij"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_roach"]
-size = Vector2(22, 14)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1y7uv"]
+size = Vector2(20, 12)
 
 [node name="Roach" type="CharacterBody2D"]
+scale = Vector2(0.7, 0.7)
+collision_layer = 16
+motion_mode = 1
+safe_margin = 0.1
 script = ExtResource("2_fghij")
+SPEED = 40.0
+FLEE_SPEED_MULTIPLIER = 3.0
+GRAVITY = 0.0
+min_idle_time = 0.8
+chance_to_change_direction = 5.0
+lifespan = 25.0
+wander_time_min = null
+wander_time_max = 20.0
+flee_distance = 230.0
 
 [node name="AnimatedSprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_abcde")
@@ -15,9 +28,6 @@ hframes = 4
 vframes = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-# Animations will be defined after the script is in place, or manually by the user.
-# For now, an empty AnimationPlayer is created.
-# A "walk" animation cycling frames 0-11 at 0.1s/frame is planned.
 
-[node name="CollisionShape" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_roach") 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1y7uv")

@@ -92,7 +92,7 @@ func update_sprite_direction():
 	else:
 		animated_sprite.flip_h = false
 
-func follow_behavior(delta):
+func follow_behavior(_delta):
 	if not is_instance_valid(following_rat):
 		following_rat = null
 		speed = randf_range(80, 120) # Reset to a random normal speed
@@ -112,7 +112,7 @@ func follow_behavior(delta):
 		velocity.x = direction * following_rat.speed * 0.9 # Maintain slightly slower speed
 	
 	move_and_slide()
-
+	
 	if global_position.distance_to(following_rat.global_position) > 150: # Increased breakaway distance
 		following_rat = null
 		speed = randf_range(80, 120) # Reset to a random normal speed

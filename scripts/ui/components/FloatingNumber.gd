@@ -23,7 +23,39 @@ var shader_material: ShaderMaterial
 @onready var animation_timer = $AnimationTimer
 @onready var glitch_timer = $GlitchTimer
 
+# Exported properties to be set by EffectsManager
+@export var custom_duration: float = 1.5:
+	set(new_duration):
+		custom_duration = new_duration
+		if animation_timer: # Check if node is ready
+			animation_timer.wait_time = custom_duration
+
+@export var custom_color: Color = Color.WHITE:
+	set(new_color):
+		custom_color = new_color
+		if main_label: # Check if node is ready
+			main_label.modulate = custom_color
+			# Optionally, you might want to modulate red_label and green_label too,
+			# or adjust their base colors if they are not just white.
+			# For now, just modulating the main label.
+			# red_label.modulate = new_color 
+			# green_label.modulate = new_color
+
+@export var scale_modifier: float = 1.0:
+	set(new_scale_mod):
+		scale_modifier = new_scale_mod
+		if is_inside_tree(): # Check if node is ready
+			scale = Vector2(1.0, 1.0) * scale_modifier # Apply relative to base scale of 1
+
 func _ready():
+	# Apply exported properties if they were set before _ready (e.g., by EffectsManager)
+	if animation_timer and custom_duration != animation_timer.wait_time:
+		animation_timer.wait_time = custom_duration
+	if main_label and main_label.modulate != custom_color:
+		main_label.modulate = custom_color
+	# Apply initial scale based on modifier
+	scale = Vector2(randf_range(0.9, 1.1), randf_range(0.9, 1.1)) * scale_modifier
+
 	# Set the text value for all labels
 	main_label.text = value
 	red_label.text = value
@@ -42,7 +74,6 @@ func _ready():
 	
 	# Start with slight random rotation and scale
 	rotation_degrees = randf_range(-10, 10)
-	scale = Vector2(randf_range(0.9, 1.1), randf_range(0.9, 1.1))
 	
 	# Add a slight random horizontal movement
 	velocity.x = randf_range(-20, 20)
@@ -143,6 +174,37 @@ func set_value(new_value):
 		main_label.text = value 
 		red_label.text = value
 		green_label.text = value
+
+# Method for EffectsManager to set duration
+func set_duration(new_duration: float):
+	custom_duration = new_duration # Store it
+	if animation_timer: # If ready
+		animation_timer.wait_time = new_duration
+		print("FloatingNumber: Duration set to ", new_duration)
+	else: # If not ready, it will be applied in _ready()
+		print("FloatingNumber: Duration will be set in _ready() to ", new_duration)
+
+# Method for EffectsManager to set color
+func set_color(new_color: Color):
+	custom_color = new_color # Store it
+	if main_label: # If ready
+		main_label.modulate = new_color
+		# red_label.modulate = new_color # Optional: modulate glitch labels too
+		# green_label.modulate = new_color
+		print("FloatingNumber: Color set to ", new_color)
+	else: # If not ready, it will be applied in _ready()
+		print("FloatingNumber: Color will be set in _ready() to ", new_color)
+
+# Method for EffectsManager to set scale modifier
+func set_scale_modifier(new_scale_mod: float):
+	scale_modifier = new_scale_mod # Store it
+	if is_inside_tree(): # If ready
+		# Apply relative to a base random scale, then modify
+		var base_random_scale = Vector2(randf_range(0.9, 1.1), randf_range(0.9, 1.1))
+		scale = base_random_scale * new_scale_mod
+		print("FloatingNumber: Scale modifier set to ", new_scale_mod, ", final scale: ", scale)
+	else: # If not ready, it will be applied in _ready()
+		print("FloatingNumber: Scale modifier will be set in _ready() to ", new_scale_mod)
 
 # Static function to spawn a floating number at a specific position
 static func spawn(parent: Node, pos: Vector2, value_text: String = "+1", custom_duration: float = 1.5) -> Node:
