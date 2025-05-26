@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c6vuxwng8t8qk"]
 
 [ext_resource type="Script" uid="uid://nnyp7bc32nci" path="res://scripts/core/Main.gd" id="1_main_script"]
-[ext_resource type="Texture2D" uid="uid://bmwgu3d13utv5" path="res://assets/art/backgrounds/globalBG63.jpg" id="2_0bbpv"]
 [ext_resource type="PackedScene" uid="uid://edoes2qjayab" path="res://scenes/ui/components/GirthCounter.tscn" id="2_vcsgt"]
+[ext_resource type="Texture2D" uid="uid://gn2dgj4xf7yn" path="res://assets/art/backgrounds/globalPixelBG.jpg" id="3_vcsgt"]
 [ext_resource type="PackedScene" uid="uid://cpjggrg8y0u5h" path="res://scenes/TapperCenter.tscn" id="4_rarhs"]
 [ext_resource type="PackedScene" uid="uid://iygnr1yulhm" path="res://scenes/ui/MainLayout.tscn" id="5_main_layout"]
 
@@ -42,7 +42,7 @@ offset_right = 1280.0
 offset_bottom = 720.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_0bbpv")
+texture = ExtResource("3_vcsgt")
 expand_mode = 3
 metadata/_edit_use_anchors_ = true
 

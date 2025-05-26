@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://iygnr1yulhm"]
+[gd_scene load_steps=19 format=3 uid="uid://iygnr1yulhm"]
 
 [ext_resource type="Script" uid="uid://ba0jxr04tgbql" path="res://scripts/ui/MainLayout.gd" id="1_script"]
 [ext_resource type="StyleBox" uid="uid://b7ih064kjqxxn" path="res://assets/art/backgrounds/MainLayoutTOP.tres" id="2_pswwv"]
@@ -8,7 +8,6 @@
 [ext_resource type="StyleBox" uid="uid://cum5kh7mtvya7" path="res://assets/art/backgrounds/MainLayoutBOTTOMContentPanel.tres" id="4_flqnt"]
 [ext_resource type="PackedScene" uid="uid://cvq1vj2cmxngu" path="res://scenes/ui/components/SkillTapMeter.tscn" id="4_skill_tap_meter"]
 [ext_resource type="StyleBox" uid="uid://b42wyy5telhjm" path="res://assets/art/backgrounds/MainLayout.tres" id="5_g5lb3"]
-[ext_resource type="FontFile" uid="uid://cc4s6vllj27ks" path="res://assets/fonts/OffBitDotBold.ttf" id="12_flqnt"]
 [ext_resource type="StyleBox" uid="uid://b6bes1n1o3lts" path="res://assets/art/backgrounds/MainLayoutTOPContentPanel.tres" id="15_0qqic"]
 [ext_resource type="Script" uid="uid://c2s8h233ayyl5" path="res://scripts/ui/managers/AchievementUIManager.gd" id="placeholder_ach_ui_manager_id"]
 [ext_resource type="Script" uid="uid://ceidytjmchay1" path="res://scripts/ui/managers/ChargeMeterUIManager.gd" id="placeholder_charge_meter_ui_id"]
@@ -204,6 +203,11 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Upgrade content will appear here"
 horizontal_alignment = 1
@@ -252,7 +256,6 @@ theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "EMPTY"
 
 [node name="RightColumn" type="VBoxContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox"]
 layout_mode = 2
@@ -272,7 +275,6 @@ theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "EMPTY"
 
 [node name="EmptyButton3" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/TabsHBox/RightColumn"]
 layout_mode = 2
@@ -280,7 +282,6 @@ theme_override_colors/font_disabled_color = Color(0.670588, 0.670588, 0.670588, 
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
 theme_override_fonts/font = ExtResource("2_vnoqt")
-text = "EMPTY"
 
 [node name="BottomContentPanel" type="PanelContainer" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent"]
 layout_mode = 2
@@ -322,6 +323,10 @@ size_flags_horizontal = 3
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Trophy 1"
 horizontal_alignment = 1
@@ -338,6 +343,10 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(0, 1, 1, 1)
 theme_override_constants/line_spacing = 0
 theme_override_constants/paragraph_spacing = 0
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Wallet Info: Coming Soon"
 horizontal_alignment = 1
@@ -347,8 +356,11 @@ autowrap_mode = 3
 [node name="ConnectWalletButton" type="Button" parent="Margin/MainHBox/LeftPanel/BottomLeftContainer/BottomStylePanel/BottomContent/BottomContentPanel/BottomScrollContainer/BlockchainContentVBox"]
 layout_mode = 2
 theme_override_colors/font_hover_color = Color(1, 1, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 1, 1, 1)
 theme_override_colors/font_focus_color = Color(1, 1, 0, 1)
-theme_override_fonts/font = ExtResource("12_flqnt")
+theme_override_constants/outline_size = 3
+theme_override_fonts/font = ExtResource("2_vnoqt")
 theme_override_font_sizes/font_size = 18
 text = "Connect Wallet (Future Feature)"
 autowrap_mode = 3
@@ -517,6 +529,10 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Storefront under construction"
 horizontal_alignment = 1
@@ -614,6 +630,11 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Settings coming soon..."
 horizontal_alignment = 1
@@ -629,6 +650,11 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Player statistics will be shown here"
 horizontal_alignment = 1
@@ -644,6 +670,11 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_shadow_color = Color(1, 0, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 0
 theme_override_fonts/font = ExtResource("2_vnoqt")
 text = "Game info and help will be displayed here"
 horizontal_alignment = 1
